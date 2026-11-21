@@ -45,11 +45,6 @@ input[type=date],select{width:100%;padding:15px 14px;font-size:16px;font-family:
 select:invalid{color:#B9A3AE}
 input[type=date]:focus,select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(240,143,180,.22)}
 .row{margin-bottom:16px}
-.ymd{display:flex;gap:8px}
-.ymd .f{flex:1;display:flex;align-items:center;gap:5px;min-width:0}
-.ymd .f:first-child{flex:1.25}
-.ymd i{font-style:normal;font-size:13px;color:var(--sub);flex:0 0 auto}
-.ymd input,.ymd select{min-width:0;text-align:center;padding:15px 6px}
 .hint{font-size:11.5px;color:var(--sub);margin-top:6px;line-height:1.7}
 .go{width:100%;margin-top:6px;padding:18px;border:none;border-radius:22px;cursor:pointer;
   background:linear-gradient(180deg,#F7A3C2,#E0749D);color:#fff;font-size:17px;font-weight:bold;
@@ -134,12 +129,8 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;
 
 <section class="card" id="form">
   <div class="row">
-    <label class="fl">生年月日</label>
-    <div class="ymd">
-      <span class="f"><input type="number" id="by" inputmode="numeric" placeholder="1990" min="1900" max="2030"><i>年</i></span>
-      <span class="f"><input type="number" id="bm" inputmode="numeric" placeholder="06" min="1" max="12"><i>月</i></span>
-      <span class="f"><input type="number" id="bdd" inputmode="numeric" placeholder="24" min="1" max="31"><i>日</i></span>
-    </div>
+    <label class="fl" for="bd">生年月日</label>
+    <input type="text" id="bd" inputmode="numeric" placeholder="1990/06/24" autocomplete="off">
   </div>
   <div class="row">
     <label class="fl" for="hh">生まれた時間</label>
@@ -276,7 +267,6 @@ function log(y, m, d, h, r, p){   // のりぴのデータ収集用。利用者�
   } catch (e) { /* 記録に失敗しても診断は止めない */ }
 }
 
-var by = document.getElementById("by"), bm = document.getElementById("bm"), bdd = document.getElementById("bdd");
 function daysIn(y, m) {
   if (!y || !m) return 31;
   var leap = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
@@ -291,11 +281,11 @@ hh.innerHTML = '<option value="" disabled selected>選択する</option>' +
 
 function run(){
   var err = document.getElementById("err");
-  var y = +by.value, m = +bm.value, d = +bdd.value;
-  if (!y || y < 1900 || y > 2030) { err.textContent = "生まれた年を入れてください（1900〜2030）"; err.hidden = false; return; }
-  if (!m || m < 1 || m > 12) { err.textContent = "月を1〜12で入れてください"; err.hidden = false; return; }
-  if (!d || d < 1) { err.textContent = "日を入れてください"; err.hidden = false; return; }
-  if (d > daysIn(y, m)) { err.textContent = y + "年" + m + "月は" + daysIn(y, m) + "日までです"; err.hidden = false; return; }
+  var mm = (document.getElementById("bd").value || "").match(/(\d{4})\D*(\d{1,2})\D*(\d{1,2})/);
+  if (!mm) { err.textContent = "生年月日を 1990/06/24 のように入れてください"; err.hidden = false; return; }
+  var y = +mm[1], m = +mm[2], d = +mm[3];
+  if (y < 1900 || y > 2030) { err.textContent = "1900年〜2030年で入れてください"; err.hidden = false; return; }
+  if (m < 1 || m > 12 || d < 1 || d > daysIn(y, m)) { err.textContent = "その日付は存在しません"; err.hidden = false; return; }
   var hv = hh.value;
   if (!hv) { err.textContent = "生まれた時間を選んでください（わからない でも大丈夫です）"; err.hidden = false; return; }
   // 節入りの判定は正午でそろえる（23時台だけ翌日として扱う）
