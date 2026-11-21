@@ -9,12 +9,13 @@
 <style>
 *{box-sizing:border-box}
 :root{
-  --bg:#FDF2F6; --card:#FFFCFD; --ink:#5B4450; --sub:#A48B99; --line:#F6E2EA;
+  --bg:#FDF3F7; --card:#FFFDFE; --ink:#64505C; --sub:#AE97A3; --line:#F8E8EE;
   --gold:#E8BE86; --pink:#F08FB4; --pink-d:#D7638F; --lav:#AC8FDB;
 }
 html,body{margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font-size:16px;line-height:1.9;
-  font-family:"Hiragino Mincho ProN","Yu Mincho","MS PMincho",serif;
+body{background:var(--bg);color:var(--ink);font-size:16px;line-height:2.0;letter-spacing:.02em;
+  font-family:"Hiragino Maru Gothic ProN","ヒラギノ丸ゴ ProN W4","Hiragino Maru Gothic Pro",
+    -apple-system,"BIZ UDPGothic","Yu Gothic Medium","Meiryo",sans-serif;
   background:linear-gradient(180deg,#FDEFF5 0%,#FFF8FA 48%,#FCF1F6 100%);
   background-attachment:fixed;}
 .wrap{max-width:660px;margin:0 auto;padding:0 14px 60px}
@@ -22,21 +23,27 @@ header{text-align:center;padding:36px 14px 24px}
 header .badge{display:inline-block;padding:5px 16px;border:1px solid var(--pink);border-radius:999px;
   background:#fff;color:var(--pink-d);font-size:11px;font-weight:900;letter-spacing:.18em;margin-bottom:14px;
   box-shadow:0 3px 10px rgba(240,143,180,.22)}
-header h1{margin:0 0 9px;font-size:clamp(26px,6.4vw,34px);line-height:1.45;letter-spacing:.05em;font-weight:900;
+header h1{margin:0 0 11px;font-size:clamp(25px,6.2vw,33px);line-height:1.55;letter-spacing:.1em;font-weight:800;
   background:linear-gradient(90deg,#D7638F,#AC8FDB);-webkit-background-clip:text;background-clip:text;color:transparent}
 header p{margin:0;font-size:13.5px;color:var(--sub)}
 header h1 .hsub{display:block;margin:7px 0 0;font-size:.5em;letter-spacing:.34em;font-weight:900}
-.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px 19px;margin:0 0 16px;
-  box-shadow:0 10px 26px rgba(199,120,152,.11)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:26px 21px;margin:0 0 20px;
+  box-shadow:0 10px 30px rgba(199,120,152,.08)}
 label.fl{display:block;font-size:13px;font-weight:700;color:var(--pink-d);margin:0 0 7px;letter-spacing:.05em}
-input[type=date],select{width:100%;padding:14px 13px;font-size:16px;font-family:inherit;color:var(--ink);
-  background:#fff;border:1px solid var(--line);border-radius:13px;appearance:none;-webkit-appearance:none}
+input[type=date],select{width:100%;padding:15px 14px;font-size:16px;font-family:inherit;color:var(--ink);
+  background:#fff;border:1px solid var(--line);border-radius:17px;appearance:none;-webkit-appearance:none}
+select:invalid{color:#B9A3AE}
 input[type=date]:focus,select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(240,143,180,.22)}
 .row{margin-bottom:16px}
+.ymd{display:flex;gap:8px}
+.ymd .f{flex:1;display:flex;align-items:center;gap:5px;min-width:0}
+.ymd .f:first-child{flex:1.25}
+.ymd i{font-style:normal;font-size:13px;color:var(--sub);flex:0 0 auto}
+.ymd input,.ymd select{min-width:0;text-align:center;padding:15px 6px}
 .hint{font-size:11.5px;color:var(--sub);margin-top:6px;line-height:1.7}
-.go{width:100%;margin-top:4px;padding:17px;border:none;border-radius:16px;cursor:pointer;
+.go{width:100%;margin-top:6px;padding:18px;border:none;border-radius:22px;cursor:pointer;
   background:linear-gradient(180deg,#F7A3C2,#E0749D);color:#fff;font-size:17px;font-weight:bold;
-  font-family:inherit;letter-spacing:.08em;box-shadow:0 6px 0 #C25680,0 12px 22px rgba(194,86,128,.28)}
+  font-family:inherit;letter-spacing:.12em;box-shadow:0 5px 0 #D98AAB,0 12px 24px rgba(194,86,128,.2)}
 .go:active{transform:translateY(3px);box-shadow:0 3px 0 #C25680}
 .err{color:var(--pink-d);font-size:13px;margin-top:10px;font-weight:700}
 /* 割合 */
@@ -76,20 +83,31 @@ input[type=date]:focus,select:focus{outline:none;border-color:var(--pink);box-sh
 .ex.warn b{background:#E8A66B}
 .ex.step b{background:var(--lav)}
 /* セクション */
-h2{font-size:23px;font-weight:900;line-height:1.4;margin:0 0 14px;letter-spacing:.03em;
-  padding-bottom:11px;border-bottom:1px solid var(--line)}
+h2{font-size:22px;font-weight:800;line-height:1.55;margin:0 0 15px;letter-spacing:.05em;
+  padding-bottom:12px;border-bottom:1px solid var(--line)}
 h2 span{display:block;font-size:10.5px;font-weight:900;letter-spacing:.2em;color:var(--pink);margin-bottom:5px}
 ul{list-style:none;margin:0 0 15px;padding:0}
-ul li{position:relative;padding:8px 0 8px 25px;font-size:15px;border-bottom:1px dashed #F6E6ED;line-height:1.75}
+ul li{position:relative;padding:9px 0 9px 26px;font-size:15px;border-bottom:1px dashed #F8EDF2;line-height:1.95}
 ul li:last-child{border-bottom:none}
 ul li::before{content:"";position:absolute;left:5px;top:17px;width:8px;height:8px;border-radius:50%;
   background:linear-gradient(135deg,#F7AFCA,#E8BE86)}
-.note{background:linear-gradient(135deg,#FFF6FA,#FDF1E9);border:1px solid #F6E2EA;border-radius:14px;
-  padding:13px 15px;font-size:14.5px;line-height:1.85}
+.note{background:linear-gradient(135deg,#FFF7FB,#FEF4EC);border:1px solid #F8E8EE;border-radius:18px;
+  padding:15px 17px;font-size:14.5px;line-height:2.0}
 .kotsu{background:#fff;border:1px dashed var(--pink);border-radius:14px;padding:12px 15px;font-size:14.5px;margin-top:13px}
 .kotsu b{color:var(--pink-d)}
-.sep{text-align:center;font-size:15px;letter-spacing:.35em;padding:14px 0 10px;color:var(--pink);opacity:.6}
-.again{width:100%;padding:15px;border:1px solid var(--line);border-radius:15px;background:#fff;
+.sep{text-align:center;padding:9px 0 14px;line-height:0}
+.sep .kao{display:inline-block;width:90px;height:auto}
+.cta{margin:26px 0 8px;padding:28px 22px;text-align:center;border-radius:26px;
+  background:linear-gradient(145deg,#FFF3F8,#FDEDE2);border:1px solid var(--line);
+  box-shadow:0 10px 26px rgba(199,120,152,.13)}
+.cta-t{margin:0 0 8px;font-size:12px;font-weight:900;letter-spacing:.2em;color:var(--pink)}
+.cta-b{margin:0 0 17px;font-size:14.5px;line-height:1.9;color:var(--ink)}
+.cta-b b{color:var(--pink-d);font-size:16px}
+.cta-btn{display:inline-block;max-width:100%;box-sizing:border-box;padding:16px 30px;border-radius:20px;
+  background:linear-gradient(180deg,#F7A3C2,#E0749D);color:#fff;text-decoration:none;font-weight:bold;
+  font-size:16px;letter-spacing:.1em;box-shadow:0 4px 0 #D98AAB,0 11px 22px rgba(194,86,128,.2)}
+.cta-btn:active{transform:translateY(2px);box-shadow:0 3px 0 #C25680}
+.again{width:100%;padding:16px;border:1px solid var(--line);border-radius:20px;background:#fff;
   color:var(--sub);font-size:15px;font-family:inherit;cursor:pointer;margin-top:6px}
 footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;line-height:1.9}
 [hidden]{display:none!important}
@@ -106,13 +124,16 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;
 
 <section class="card" id="form">
   <div class="row">
-    <label class="fl" for="bd">生年月日</label>
-    <input type="date" id="bd" min="1900-01-01" max="2030-12-31">
+    <label class="fl">生年月日</label>
+    <div class="ymd">
+      <span class="f"><input type="number" id="by" inputmode="numeric" placeholder="1990" min="1900" max="2030"><i>年</i></span>
+      <span class="f"><select id="bm" required></select><i>月</i></span>
+      <span class="f"><select id="bdd" required></select><i>日</i></span>
+    </div>
   </div>
   <div class="row">
     <label class="fl" for="hh">生まれた時間</label>
-    <select id="hh"></select>
-    <p class="hint">わからなくて大丈夫です。23時台生まれの方だけ、結果が変わります</p>
+    <select id="hh" required></select>
   </div>
   <button class="go" id="go">診断する</button>
   <p class="err" id="err" hidden></p>
@@ -130,7 +151,7 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;
 (function(){
 "use strict";
 var LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbyy5ZLj9EREvMBEAwc3ljXZM5k1lVL-EELxUWYZXAjsCUkEZmOvzzx8p_To4hfvhB6Y/exec";
-var D = {"gyakuStems": ["甲", "丙", "戊", "庚", "壬"], "gyakuUns": ["胎", "長生", "冠帯", "帝旺", "病", "墓"], "types": {"gyaku": {"name": "逆算設計型", "lead": "ゴールを先に決めて、そこから今やることを組み立てる人", "items": ["目標の金額や期限を決めると、やる気が出る", "計画表やスケジュールを作るのが好き", "先が見えないと不安になる", "一度決めたことは最後までやり切る", "準備に時間をかけるほど結果が出る", "数字や実績で成長を確かめたい", "毎月の売上や貯金を管理するのが得意", "急な予定変更が苦手", "積み上げたものが大きな収入に変わる"], "kotsu": "まずゴールを紙に書き、月ごとの目標に分ける"}, "rinki": {"name": "臨機応変型", "lead": "流れや直感に乗って、その場で一番いい道を選ぶ人", "items": ["「これだ！」と思った瞬間に動ける", "計画をきっちり決めると、かえって動けなくなる", "人との出会いやご縁から仕事が生まれる", "思いつきが当たって、一気にお金が入ることがある", "状況が変わっても、すぐに切り替えられる", "同じことの繰り返しだと飽きてしまう", "複数の仕事や収入源を同時に回せる", "気分が乗っている時の行動力がすごい", "予定外の出来事をチャンスに変えられる"], "kotsu": "ゴールはざっくり決めて、道順は流れに任せる"}}, "buki": {"甲": [["一つの専門を深く極める", "看板になる肩書きを持つ", "セミナーや講演で大勢に話す", "SNSで毎日まっすぐ発信する", "「この人と言えばこれ」と覚えられる"], "一つの専門をとことん深めて、それを大勢の前で見せた時に、お金が集まってくる"], "乙": [["紹介や口コミで仕事が広がる", "個別セッションや少人数講座", "相手に合わせて内容を変える", "LINEやDMで一人ずつ届ける", "協力者と組んで一緒に売る"], "人とのつながりを大切にして、一人ひとりに合わせて丁寧に届けると、紹介でお金が入ってくる"], "丙": [["大人数のイベントを開く", "コミュニティやサロンを運営する", "明るさで人を集める", "集まった人が安心できる場を作る", "会員制や継続課金の仕組み"], "明るさで人を集めて、集まった人が安心していられる場を作ると、お金が積み上がる"], "丁": [["マンツーマンの伴走サポート", "長期の継続コース", "一人の変化を丁寧に見守る", "受講生の成果を実績にする", "卒業生が次の人を連れてくる"], "一人の人に長く寄り添い、その人が変わっていく姿が実績になると、次のお金を呼ぶ"], "戊": [["信頼を土台に新しい事業を始める", "マニュアルやシステムを作る", "自分がいなくても回る形にする", "資格や認定制度を作る", "大きな決断を任される立場に立つ"], "まわりからの信頼を土台にして、自分がいなくても回る仕組みを作ると、お金が入り続ける"], "己": [["一つのものを長く育てる", "品質にこだわって価格を上げる", "自分の世界観をブランドにする", "手作りやこだわりの商品", "丁寧なアフターフォロー"], "一つのものをコツコツ育てて質を高め、自分だけのブランドにすると、値段を上げても選ばれる"], "庚": [["誰もやっていない分野を切り開く", "決めたらすぐ形にする", "事業を大きく広げる", "全国や海外に展開する", "教える人を育てて広げる"], "誰もやっていないことを決めて切り開き、それを大きく広げていくほど、お金の入り口が増える"], "辛": [["磨いた専門性で細かく相談に乗る", "美しさや丁寧さで選ばれる", "一人ひとりに合わせた提案", "少人数で高単価", "気づかいのある連絡やフォロー"], "磨いた専門性を、一人ひとりへの細やかなサポートで届けると、高い単価でお金になる"], "壬": [["幅広い知識や経験を一つにまとめる", "看板商品を一つ決めて育てる", "企画やプロデュースをする", "人と情報をつないで形にする", "長く売れる柱を作る"], "広く集めた知識や経験の中から、看板商品を一つ決めて長く育てると、それが長く売れる柱になる"], "癸": [["相手の話をじっくり聴く", "寄り添い型のカウンセリング", "人と人をつなぐ", "口コミで少しずつ広がる", "やさしい発信を続ける"], "相手の話をじっくり聴いて、人と人とのつながりを育てていくと、お金も少しずつ広がる"]}, "kanban": {"長生": [["素直で応援したくなる", "学び続ける姿を見せる", "品の良さがある", "先生や講師の看板が似合う", "伸びしろを感じさせる"], "素直に学び続ける人に見える。成長していく姿をそのまま見せると、応援が集まる"], "沐浴": [["華やかさと人気", "自由で今っぽい雰囲気", "見た目の魅力", "変化し続ける姿を発信する", "ファンがつきやすい"], "華やかで自由な人に見える。変わっていく自分を発信し続けると、ファンが増えていく"], "冠帯": [["堂々とした存在感", "一人前の実績を見せる", "肩書きや受賞歴が生きる", "晴れ舞台が似合う", "自信のある見せ方"], "堂々とした一人前の人に見える。肩書きや実績をはっきり見せると、信頼が集まる"], "建禄": [["誠実でまじめ", "実力派", "現場のプロとして見られる", "その場で頼りになる", "長く付き合える安心感"], "まじめで腕の確かな人に見える。現場での実力を見せると、長く選ばれ続ける"], "帝旺": [["リーダーやカリスマ", "業界の第一人者", "言い切る強い言葉", "大きな舞台が似合う", "「この人についていきたい」と思われる"], "力強いリーダーに見える。はっきり言い切って前に立つと、人がついてくる"], "衰": [["落ち着きと品", "経験豊富なベテラン", "相談しやすい", "控えめで上品", "信頼できる大人"], "落ち着いたベテランに見える。経験からのアドバイスを出すと、相談したい人が集まる"], "病": [["やさしさと共感", "感性や芸術性", "繊細な世界観", "癒しの雰囲気", "弱さも見せられる"], "やさしくて人の痛みが分かる人に見える。共感を前に出すと、悩んでいる人が集まる"], "死": [["専門家や研究者", "神秘的な雰囲気", "深い知識", "静かな説得力", "目に見えない世界を語れる"], "一つを深く極めた専門家に見える。知識の深さを見せると、本物を求める人が集まる"], "墓": [["伝統や歴史を背負う", "受け継いだものを活かす", "集めて整理する人", "落ち着いた重み", "信用の積み重ね"], "信用を大事にする人に見える。受け継いだものや積み上げた実績を見せると、信頼される"], "絶": [["型破りの個性派", "ひらめきの人", "予想外の発想", "自由人", "ゼロから何かを作る人"], "型にはまらない個性派に見える。ひらめきや意外な発想を見せると、人を引きつける"], "胎": [["可能性を感じさせる", "新しいもの好き", "好奇心が強い", "純粋さ", "未来の話ができる"], "これから何かを生み出しそうな人に見える。未来の話をすると、期待が集まる"], "養": [["かわいがられる", "愛され上手", "親しみやすさ", "応援したくなる", "年上に好かれる"], "親しみやすく、かわいがられる人に見える。素直に頼ると、応援が集まってくる"]}, "kachi": {"長生": [["学びを仕事にする", "資格や知識を活かす", "教える仕事", "少しずつ実績を積む", "目上の人に育ててもらう"], "学んだことを仕事にして、実績を一つずつ積み上げていくと、収入も右肩上がりになる"], "沐浴": [["新しいことにすぐ挑戦する", "複数の収入源を持つ", "流行を取り入れる", "仕事を変えることを恐れない", "自由な働き方"], "新しいことに次々と挑戦して、収入の柱を増やしていくほど、稼げる道が広がる"], "冠帯": [["表に立つ", "見た目やブランドを整える", "肩書きを活かす", "人前で話す", "華やかな仕事"], "肩書きや見た目を整えて、人前に堂々と出た時に、一番お金が集まる"], "建禄": [["自分の腕で稼ぐ", "現場で実力を出す", "その場の判断で動く", "一つの腕を長く磨く", "自分の裁量で働ける場を持つ"], "現場を任されて、自分の腕と判断で動ける時に、一番力が出て稼げる"], "帝旺": [["トップに立つ", "経営者や独立", "大きな金額を動かす", "人を率いる", "勝負どころで決める"], "人の上に立ち、チームを率いて大きな金額を動かすほど、大きく稼げる"], "衰": [["経験を活かす", "アドバイザーや相談役", "落ち着いた仕事", "裏方で支える", "信頼で長く続ける"], "これまでの経験を活かして、相談役や裏方として人を支えると、長く稼ぎ続けられる"], "病": [["共感力を活かす", "癒しやケアの仕事", "芸術や美容など感性の仕事", "人の痛みに寄り添う", "好きなことを仕事にする"], "共感力や感性を活かして、困っている人を癒したり支えたりすると、それがお金になる"], "死": [["一つを深く研究する", "専門家や職人", "目に見えないものを扱う", "静かに極める", "知識を売る"], "一つのことをとことん深めて、その専門知識を売ると、それがそのままお金になる"], "墓": [["積み上げたものを活かす", "不動産や資産を持つ", "家業や受け継いだものを守る", "情報を集めて整理する", "長い目で育てる"], "積み上げてきたものや受け継いだものを活かして、長い目で育てると、お金を生み続ける"], "絶": [["ゼロから生み出す", "ひらめきで動く", "新しい事業を始める", "波を味方にする", "直感を信じる"], "ゼロから新しいことを始める時に力が出る。ひらめいたらすぐ動くことが、お金の元になる"], "胎": [["アイデアを出す", "企画やプランニング", "準備期間を決めて仕込む", "新しい可能性を探す", "人と組んで形にする"], "アイデアを出して企画を練り、準備の期間をとってから形にすると、お金になる"], "養": [["人に引き立てられる", "応援される", "年上や目上と組む", "愛され力を活かす", "紹介で仕事が来る"], "年上や目上の人に引き立ててもらい、紹介で仕事を広げると、お金が入ってくる"]}, "uketori": {"長生": [["学びにお金を使う", "素直に受け取れる", "将来のために使う", "無理な賭けはしない", "少しずつ増やす"], "学びや自己投資にお金を使うほど、受け取れる金額も大きくなっていく"], "沐浴": [["気分で使いやすい", "楽しいことに使う", "入るのも出るのも早い", "体験にお金をかける", "貯金は仕組みで作る"], "お金が入るのも出るのも早い。楽しく使っていいので、先に貯める仕組みを作ると安定する"], "冠帯": [["身なりや見た目に使う", "良いものを選ぶ", "自信を持って受け取る", "安売りしない", "見栄の出費に注意"], "自分の価値に見合った金額を、堂々と受け取れる人。見栄での出費だけは注意"], "建禄": [["必要な物にはしっかり使う", "使い道は自分で決める", "仕事の道具や、腕を磨くことにお金をかける", "無駄遣いはしない", "抱え込まず人に頼る"], "稼いだお金の使い道を、自分で決められる人。仕事の道具や、腕を磨くことに使うほど収入が増える"], "帝旺": [["大きく使って大きく入る", "人におごる", "投資に強い", "自分で決めたい", "出費の振れ幅に注意"], "大きく使って大きく入るタイプ。使う上限を先に決めておくと、使いすぎを防げる"], "衰": [["状況を見て使い分ける", "無理をしない", "人のために使う", "守りが得意", "少額でも満足できる"], "派手さはないけれど、お金との付き合い方が上手。必要な分を受け取り、長く守れる"], "病": [["先を考えて備える", "安心できる貯金を先に作る", "癒しや心のケアに使う", "頼まれると断れない所に注意", "心配しすぎて受け取りを止めない"], "先のことを考えて備えられる人。安心できる貯金を先に作ると、お金の流れが整う"], "死": [["物欲が少ない", "必要な物にだけ使う", "知識に使う", "お金に執着しない", "受け取ることに遠慮しがち"], "お金への執着が少なく、受け取るのを遠慮しがち。きちんと受け取ると、入るお金が増える"], "墓": [["貯金が得意", "物を大切に使う", "資産を守る", "慎重に使う", "ため込みすぎに注意"], "貯める力が強い。ため込みすぎずに時々使うと、お金がさらに回り出す"], "絶": [["波が大きい", "直感で使う", "一気に入って一気に出る", "執着しない", "仕組みで守る"], "一気に入って一気に出るタイプ。入った時にすぐ分けておく仕組みを作ると安心"], "胎": [["未来の種にお金を使う", "新しい学びや道具に使う", "使う前に期間と予算を決める", "すぐに回収しようとしない", "種まきに使う"], "未来につながる学びや道具にお金を使う人。期間と予算を先に決めると、後で実りになる"], "養": [["人からもらいやすい", "ご縁でお金が入る", "甘え上手", "家族に使う", "頼りすぎに注意"], "人のご縁でお金が入るタイプ。感謝して受け取るほど、さらに応援が集まる"]}, "seasons": [{"label": "春 Grow", "lead": "育てて、見せて、形にする", "uns": ["長生", "沐浴", "冠帯"]}, {"label": "夏 Scale", "lead": "実力で立ち、大きく稼ぎ、経験を利益に変える", "uns": ["建禄", "帝旺", "衰"]}, {"label": "秋 Stock", "lead": "絞って、区切って、貯める", "uns": ["病", "死", "墓"]}, {"label": "冬 Charge", "lead": "手放して、仕込んで、育てる", "uns": ["絶", "胎", "養"]}], "extra": {"長生": ["自信のなさからの安売り", "小さく始めて、先生や応援してくれる人を味方につける"], "沐浴": ["使いすぎと、気分での値下げ", "見た目と体験を整える。お金を使うルールだけは先に決める"], "冠帯": ["見栄と、設備にお金をかけすぎること", "資格、実績、プロフィールを見える形に整える"], "建禄": ["意地を張って一人で抱え込むこと", "分野を1つに絞り、値段を実力に見合う所まで上げる"], "帝旺": ["使いすぎと、広げすぎ", "一番稼げているうちに、資産を作り、次の準備まで済ませておく"], "衰": ["昔うまくいったやり方にこだわること", "ムダを削る、人に任せる、1件あたりの利益を上げる"], "病": ["体調を崩して休むこと", "規模は小さく深く。休む仕組みを先に作る"], "死": ["やめどきを逃して赤字を続けること", "やめるリストを作り、売る・閉じるの決断を先のばしにしない"], "墓": ["出し惜しみと、使わずに眠らせておくこと", "貯める仕組みと、いつ使うかの期限を両方決める"], "絶": ["勢いで全部やめてしまうこと", "収入の柱を複数にして、やめる前に次の準備をしておく"], "胎": ["準備が整う前に焦って出すこと", "育てる期間と予算を先に決めてから始める"], "養": ["相手を頼らせすぎること", "お客さんが自分でできるようになるまで育てる商品を作る"]}, "sdetail": {"春 Grow": {"sub": "見せて育てる", "flow": "まだ完成していないものを外に出して、知ってもらうことが、そのまま収入になります", "stages": ["育てて｜学んだことを仕事にする", "見せて｜新しさで人を集める", "形にする｜肩書きと実績を整える"], "leak": "値段と予算が自分で決まっていないと漏れます", "leak3": ["安く出しすぎる", "気分で値下げする", "見せるためにお金をかけすぎる"], "act": ["値段を先に決めて、動かさない", "使う予算の上限を決める", "見える形に整えて、出す回数を増やす"]}, "夏 Scale": {"sub": "実力を値段に変える", "flow": "新しく育てなくても、いま持っている腕・立場・経験が、そのまま値段になります", "stages": ["実力で立ち｜自分の腕で稼ぐ", "大きく稼ぎ｜人を率いて大きく動かす", "経験を利益に変える｜相談役として経験を渡す"], "leak": "人に渡せないと、自分が天井になります", "leak3": ["一人で抱え込む", "自分で広げすぎる", "昔のやり方を変えない"], "act": ["値段を実力に見合うまで上げる", "任せる相手を1人決める", "やり方を1つ入れ替える"]}, "秋 Stock": {"sub": "絞って残す", "flow": "数を増やさず、深さと質で稼ぐほど、入ってきたお金が手元に残ります", "stages": ["絞って｜深く寄り添う", "区切って｜一つを極める", "貯める｜積み上げたものを活かす"], "leak": "抱えたまま動かさないと、流れが止まります", "leak3": ["無理をして倒れる", "やめどきを逃す", "出し惜しみする"], "act": ["やめるものを1つ決める", "眠っているものを1つ出す", "休む日を先に入れる"]}, "冬 Charge": {"sub": "次の形を仕込む", "flow": "次に売るものの形を決めることが、いちばんお金になります。一人で完成させず、人の力を借りて形にします", "stages": ["手放して｜古いやり方をやめる", "仕込んで｜企画を練る", "育てる｜引き立ててもらう"], "leak": "「いつまで」を決めていないと、タイミングを外します", "leak3": ["勢いで全部やめる", "早く出しすぎる", "手を離せなくなる"], "act": ["期間と予算を先に決める", "組む相手を1人決める", "手を離す日を決める"]}}};
+var D = {"gyakuStems": ["甲", "丙", "戊", "庚", "壬"], "gyakuUns": ["胎", "長生", "冠帯", "帝旺", "病", "墓"], "types": {"gyaku": {"name": "逆算設計型", "lead": "ゴールを先に決めて、そこから今やることを組み立てる人", "items": ["目標の金額や期限を決めると、やる気が出る", "計画表やスケジュールを作るのが好き", "先が見えないと不安になる", "一度決めたことは最後までやり切る", "準備に時間をかけるほど結果が出る", "数字や実績で成長を確かめたい", "毎月の売上や貯金を管理するのが得意", "急な予定変更が苦手", "積み上げたものが大きな収入に変わる"], "kotsu": "まずゴールを紙に書き、月ごとの目標に分ける"}, "rinki": {"name": "臨機応変型", "lead": "流れや直感に乗って、その場で一番いい道を選ぶ人", "items": ["「これだ！」と思った瞬間に動ける", "計画をきっちり決めると、かえって動けなくなる", "人との出会いやご縁から仕事が生まれる", "思いつきが当たって、一気にお金が入ることがある", "状況が変わっても、すぐに切り替えられる", "同じことの繰り返しだと飽きてしまう", "複数の仕事や収入源を同時に回せる", "気分が乗っている時の行動力がすごい", "予定外の出来事をチャンスに変えられる"], "kotsu": "ゴールはざっくり決めて、道順は流れに任せる"}}, "buki": {"甲": [["一つの専門を深く極める", "看板になる肩書きを持つ", "セミナーや講演で大勢に話す", "SNSで毎日まっすぐ発信する", "「この人と言えばこれ」と覚えられる"], "一つの専門をとことん深めて、それを大勢の前で見せた時に、お金が集まってくる"], "乙": [["紹介や口コミで仕事が広がる", "個別セッションや少人数講座", "相手に合わせて内容を変える", "LINEやDMで一人ずつ届ける", "協力者と組んで一緒に売る"], "人とのつながりを大切にして、一人ひとりに合わせて丁寧に届けると、紹介でお金が入ってくる"], "丙": [["大人数のイベントを開く", "コミュニティやサロンを運営する", "明るさで人を集める", "集まった人が安心できる場を作る", "会員制や継続課金の仕組み"], "明るさで人を集めて、集まった人が安心していられる場を作ると、お金が積み上がる"], "丁": [["マンツーマンの伴走サポート", "長期の継続コース", "一人の変化を丁寧に見守る", "受講生の成果を実績にする", "卒業生が次の人を連れてくる"], "一人の人に長く寄り添い、その人が変わっていく姿が実績になると、次のお金を呼ぶ"], "戊": [["信頼を土台に新しい事業を始める", "マニュアルやシステムを作る", "自分がいなくても回る形にする", "資格や認定制度を作る", "大きな決断を任される立場に立つ"], "まわりからの信頼を土台にして、自分がいなくても回る仕組みを作ると、お金が入り続ける"], "己": [["一つのものを長く育てる", "品質にこだわって価格を上げる", "自分の世界観をブランドにする", "手作りやこだわりの商品", "丁寧なアフターフォロー"], "一つのものをコツコツ育てて質を高め、自分だけのブランドにすると、値段を上げても選ばれる"], "庚": [["誰もやっていない分野を切り開く", "決めたらすぐ形にする", "事業を大きく広げる", "全国や海外に展開する", "教える人を育てて広げる"], "誰もやっていないことを決めて切り開き、それを大きく広げていくほど、お金の入り口が増える"], "辛": [["磨いた専門性で細かく相談に乗る", "美しさや丁寧さで選ばれる", "一人ひとりに合わせた提案", "少人数で高単価", "気づかいのある連絡やフォロー"], "磨いた専門性を、一人ひとりへの細やかなサポートで届けると、高い単価でお金になる"], "壬": [["幅広い知識や経験を一つにまとめる", "看板商品を一つ決めて育てる", "企画やプロデュースをする", "人と情報をつないで形にする", "長く売れる柱を作る"], "広く集めた知識や経験の中から、看板商品を一つ決めて長く育てると、それが長く売れる柱になる"], "癸": [["相手の話をじっくり聴く", "寄り添い型のカウンセリング", "人と人をつなぐ", "口コミで少しずつ広がる", "やさしい発信を続ける"], "相手の話をじっくり聴いて、人と人とのつながりを育てていくと、お金も少しずつ広がる"]}, "kanban": {"長生": [["素直で応援したくなる", "学び続ける姿を見せる", "品の良さがある", "先生や講師の看板が似合う", "伸びしろを感じさせる"], "素直に学び続ける人に見える。成長していく姿をそのまま見せると、応援が集まる"], "沐浴": [["華やかさと人気", "自由で今っぽい雰囲気", "見た目の魅力", "変化し続ける姿を発信する", "ファンがつきやすい"], "華やかで自由な人に見える。変わっていく自分を発信し続けると、ファンが増えていく"], "冠帯": [["堂々とした存在感", "一人前の実績を見せる", "肩書きや受賞歴が生きる", "晴れ舞台が似合う", "自信のある見せ方"], "堂々とした一人前の人に見える。肩書きや実績をはっきり見せると、信頼が集まる"], "建禄": [["誠実でまじめ", "実力派", "現場のプロとして見られる", "その場で頼りになる", "長く付き合える安心感"], "まじめで腕の確かな人に見える。現場での実力を見せると、長く選ばれ続ける"], "帝旺": [["リーダーやカリスマ", "業界の第一人者", "言い切る強い言葉", "大きな舞台が似合う", "「この人についていきたい」と思われる"], "力強いリーダーに見える。はっきり言い切って前に立つと、人がついてくる"], "衰": [["落ち着きと品", "経験豊富なベテラン", "相談しやすい", "控えめで上品", "信頼できる大人"], "落ち着いたベテランに見える。経験からのアドバイスを出すと、相談したい人が集まる"], "病": [["やさしさと共感", "感性や芸術性", "繊細な世界観", "癒しの雰囲気", "弱さも見せられる"], "やさしくて人の痛みが分かる人に見える。共感を前に出すと、悩んでいる人が集まる"], "死": [["専門家や研究者", "神秘的な雰囲気", "深い知識", "静かな説得力", "目に見えない世界を語れる"], "一つを深く極めた専門家に見える。知識の深さを見せると、本物を求める人が集まる"], "墓": [["伝統や歴史を背負う", "受け継いだものを活かす", "集めて整理する人", "落ち着いた重み", "信用の積み重ね"], "信用を大事にする人に見える。受け継いだものや積み上げた実績を見せると、信頼される"], "絶": [["型破りの個性派", "ひらめきの人", "予想外の発想", "自由人", "ゼロから何かを作る人"], "型にはまらない個性派に見える。ひらめきや意外な発想を見せると、人を引きつける"], "胎": [["可能性を感じさせる", "新しいもの好き", "好奇心が強い", "純粋さ", "未来の話ができる"], "これから何かを生み出しそうな人に見える。未来の話をすると、期待が集まる"], "養": [["かわいがられる", "愛され上手", "親しみやすさ", "応援したくなる", "年上に好かれる"], "親しみやすく、かわいがられる人に見える。素直に頼ると、応援が集まってくる"]}, "kachi": {"長生": [["学びを仕事にする", "資格や知識を活かす", "教える仕事", "少しずつ実績を積む", "目上の人に育ててもらう"], "学んだことを仕事にして、実績を一つずつ積み上げていくと、収入も右肩上がりになる"], "沐浴": [["新しいことにすぐ挑戦する", "複数の収入源を持つ", "流行を取り入れる", "仕事を変えることを恐れない", "自由な働き方"], "新しいことに次々と挑戦して、収入の柱を増やしていくほど、稼げる道が広がる"], "冠帯": [["表に立つ", "見た目やブランドを整える", "肩書きを活かす", "人前で話す", "華やかな仕事"], "肩書きや見た目を整えて、人前に堂々と出た時に、一番お金が集まる"], "建禄": [["自分の腕で稼ぐ", "現場で実力を出す", "その場の判断で動く", "一つの腕を長く磨く", "自分の裁量で働ける場を持つ"], "現場を任されて、自分の腕と判断で動ける時に、一番力が出て稼げる"], "帝旺": [["トップに立つ", "経営者や独立", "大きな金額を動かす", "人を率いる", "勝負どころで決める"], "人の上に立ち、チームを率いて大きな金額を動かすほど、大きく稼げる"], "衰": [["経験を活かす", "アドバイザーや相談役", "落ち着いた仕事", "裏方で支える", "信頼で長く続ける"], "これまでの経験を活かして、相談役や裏方として人を支えると、長く稼ぎ続けられる"], "病": [["共感力を活かす", "癒しやケアの仕事", "芸術や美容など感性の仕事", "人の痛みに寄り添う", "好きなことを仕事にする"], "共感力や感性を活かして、困っている人を癒したり支えたりすると、それがお金になる"], "死": [["一つを深く研究する", "専門家や職人", "目に見えないものを扱う", "静かに極める", "知識を売る"], "一つのことをとことん深めて、その専門知識を売ると、それがそのままお金になる"], "墓": [["積み上げたものを活かす", "不動産や資産を持つ", "家業や受け継いだものを守る", "情報を集めて整理する", "長い目で育てる"], "積み上げてきたものや受け継いだものを活かして、長い目で育てると、お金を生み続ける"], "絶": [["ゼロから生み出す", "ひらめきで動く", "新しい事業を始める", "波を味方にする", "直感を信じる"], "ゼロから新しいことを始める時に力が出る。ひらめいたらすぐ動くことが、お金の元になる"], "胎": [["アイデアを出す", "企画やプランニング", "準備期間を決めて仕込む", "新しい可能性を探す", "人と組んで形にする"], "アイデアを出して企画を練り、準備の期間をとってから形にすると、お金になる"], "養": [["人に引き立てられる", "応援される", "年上や目上と組む", "愛され力を活かす", "紹介で仕事が来る"], "年上や目上の人に引き立ててもらい、紹介で仕事を広げると、お金が入ってくる"]}, "uketori": {"長生": [["学びにお金を使う", "素直に受け取れる", "将来のために使う", "無理な賭けはしない", "少しずつ増やす"], "学びや自己投資にお金を使うほど、受け取れる金額も大きくなっていく"], "沐浴": [["気分で使いやすい", "楽しいことに使う", "入るのも出るのも早い", "体験にお金をかける", "貯金は仕組みで作る"], "お金が入るのも出るのも早い。楽しく使っていいので、先に貯める仕組みを作ると安定する"], "冠帯": [["身なりや見た目に使う", "良いものを選ぶ", "自信を持って受け取る", "安売りしない", "見栄の出費に注意"], "自分の価値に見合った金額を、堂々と受け取れる人。見栄での出費だけは注意"], "建禄": [["必要な物にはしっかり使う", "使い道は自分で決める", "仕事の道具や、腕を磨くことにお金をかける", "無駄遣いはしない", "抱え込まず人に頼る"], "稼いだお金の使い道を、自分で決められる人。仕事の道具や、腕を磨くことに使うほど収入が増える"], "帝旺": [["大きく使って大きく入る", "人におごる", "投資に強い", "自分で決めたい", "出費の振れ幅に注意"], "大きく使って大きく入るタイプ。使う上限を先に決めておくと、使いすぎを防げる"], "衰": [["状況を見て使い分ける", "無理をしない", "人のために使う", "守りが得意", "少額でも満足できる"], "派手さはないけれど、お金との付き合い方が上手。必要な分を受け取り、長く守れる"], "病": [["先を考えて備える", "安心できる貯金を先に作る", "癒しや心のケアに使う", "頼まれると断れない所に注意", "心配しすぎて受け取りを止めない"], "先のことを考えて備えられる人。安心できる貯金を先に作ると、お金の流れが整う"], "死": [["物欲が少ない", "必要な物にだけ使う", "知識に使う", "お金に執着しない", "受け取ることに遠慮しがち"], "お金への執着が少なく、受け取るのを遠慮しがち。きちんと受け取ると、入るお金が増える"], "墓": [["貯金が得意", "物を大切に使う", "資産を守る", "慎重に使う", "ため込みすぎに注意"], "貯める力が強い。ため込みすぎずに時々使うと、お金がさらに回り出す"], "絶": [["波が大きい", "直感で使う", "一気に入って一気に出る", "執着しない", "仕組みで守る"], "一気に入って一気に出るタイプ。入った時にすぐ分けておく仕組みを作ると安心"], "胎": [["未来の種にお金を使う", "新しい学びや道具に使う", "使う前に期間と予算を決める", "すぐに回収しようとしない", "種まきに使う"], "未来につながる学びや道具にお金を使う人。期間と予算を先に決めると、後で実りになる"], "養": [["人からもらいやすい", "ご縁でお金が入る", "甘え上手", "家族に使う", "頼りすぎに注意"], "人のご縁でお金が入るタイプ。感謝して受け取るほど、さらに応援が集まる"]}, "seasons": [{"label": "REACH", "lead": "育てて、見せて、形にする", "uns": ["長生", "沐浴", "冠帯"]}, {"label": "VALUE", "lead": "実力で立ち、大きく稼ぎ、経験を利益に変える", "uns": ["建禄", "帝旺", "衰"]}, {"label": "DEPTH", "lead": "絞って、区切って、貯める", "uns": ["病", "死", "墓"]}, {"label": "SHIFT", "lead": "手放して、仕込んで、育てる", "uns": ["絶", "胎", "養"]}], "extra": {"長生": ["自信のなさからの安売り", "小さく始めて、先生や応援してくれる人を味方につける"], "沐浴": ["使いすぎと、気分での値下げ", "見た目と体験を整える。お金を使うルールだけは先に決める"], "冠帯": ["見栄と、設備にお金をかけすぎること", "資格、実績、プロフィールを見える形に整える"], "建禄": ["意地を張って一人で抱え込むこと", "分野を1つに絞り、値段を実力に見合う所まで上げる"], "帝旺": ["使いすぎと、広げすぎ", "一番稼げているうちに、資産を作り、次の準備まで済ませておく"], "衰": ["昔うまくいったやり方にこだわること", "ムダを削る、人に任せる、1件あたりの利益を上げる"], "病": ["体調を崩して休むこと", "規模は小さく深く。休む仕組みを先に作る"], "死": ["やめどきを逃して赤字を続けること", "やめるリストを作り、売る・閉じるの決断を先のばしにしない"], "墓": ["出し惜しみと、使わずに眠らせておくこと", "貯める仕組みと、いつ使うかの期限を両方決める"], "絶": ["勢いで全部やめてしまうこと", "収入の柱を複数にして、やめる前に次の準備をしておく"], "胎": ["準備が整う前に焦って出すこと", "育てる期間と予算を先に決めてから始める"], "養": ["相手を頼らせすぎること", "お客さんが自分でできるようになるまで育てる商品を作る"]}, "sdetail": {"REACH": {"sub": "見せて育てる", "flow": "まだ完成していないものを外に出して、知ってもらうことが、そのまま収入になります", "stages": ["育てて｜学んだことを仕事にする", "見せて｜新しさで人を集める", "形にする｜肩書きと実績を整える"], "leak": "値段と予算が自分で決まっていないと漏れます", "leak3": ["安く出しすぎる", "気分で値下げする", "見せるためにお金をかけすぎる"], "act": ["値段を先に決めて、動かさない", "使う予算の上限を決める", "見える形に整えて、出す回数を増やす"]}, "VALUE": {"sub": "実力を値段に変える", "flow": "新しく育てなくても、いま持っている腕・立場・経験が、そのまま値段になります", "stages": ["実力で立ち｜自分の腕で稼ぐ", "大きく稼ぎ｜人を率いて大きく動かす", "経験を利益に変える｜相談役として経験を渡す"], "leak": "人に渡せないと、自分が天井になります", "leak3": ["一人で抱え込む", "自分で広げすぎる", "昔のやり方を変えない"], "act": ["値段を実力に見合うまで上げる", "任せる相手を1人決める", "やり方を1つ入れ替える"]}, "DEPTH": {"sub": "絞って残す", "flow": "数を増やさず、深さと質で稼ぐほど、入ってきたお金が手元に残ります", "stages": ["絞って｜深く寄り添う", "区切って｜一つを極める", "貯める｜積み上げたものを活かす"], "leak": "抱えたまま動かさないと、流れが止まります", "leak3": ["無理をして倒れる", "やめどきを逃す", "出し惜しみする"], "act": ["やめるものを1つ決める", "眠っているものを1つ出す", "休む日を先に入れる"]}, "SHIFT": {"sub": "次の形を仕込む", "flow": "次に売るものの形を決めることが、いちばんお金になります。一人で完成させず、人の力を借りて形にします", "stages": ["手放して｜古いやり方をやめる", "仕込んで｜企画を練る", "育てる｜引き立ててもらう"], "leak": "「いつまで」を決めていないと、タイミングを外します", "leak3": ["勢いで全部やめる", "早く出しすぎる", "手を離せなくなる"], "act": ["期間と予算を先に決める", "組む相手を1人決める", "手を離す日を決める"]}}};
 
 // ====== 四柱推命エンジン（MetaQ占いアプリから移植・ISD実機検証済み） ======
   const JIKKAN = ["甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
@@ -294,7 +315,7 @@ function seasonHtml(un){
     return '<div class="st'+(j === k ? " on" : "")+'">'+esc(x.split("｜")[0])+'</div>'; }).join("");
   var now = d.stages[k].split("｜");
   return '<div class="card">' +
-    '<h2><span>STYLE</span>あなたの稼ぎ方のタイプ</h2>' +
+    '<h2><span>STYLE</span>あなたのビジネス設計タイプ</h2>' +
     '<div class="season-name">'+esc(s.label)+'</div>' +
     '<div class="season-sub">'+esc(d.sub)+'</div>' +
     '<div class="note">'+esc(d.flow)+'</div>' +
@@ -309,6 +330,12 @@ function extraHtml(un){
     '<div class="ex step"><b>今日からの一歩</b><span>'+esc(e[1])+'</span></div></div>';
 }
 
+var CTA = '<div class="cta">' +
+  '<p class="cta-b">あなたにぴったりな引き寄せのやり方を<br>' +
+  'のりぴのメルマガでお届けしています</p>' +
+  '<a class="cta-btn" href="https://www.reservestock.jp/subscribe/194781" target="_blank" rel="noopener">メルマガを受け取る（無料）</a>' +
+  '</div>';
+var SEP = '<div class="sep"><img class="kao" src="data:image/png;base64,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" alt="" width="90" height="30"></div>';
 function render(r){
   var p = calcRatio(r), q = 100 - p;
   var gFirst = (p > q) ? true : (p < q) ? false : (D.gyakuUns.indexOf(r.day) >= 0);
@@ -329,11 +356,12 @@ function render(r){
     listHtml(t1.items) +
     '<div class="kotsu"><b>稼ぐコツ</b>　'+esc(t1.kotsu)+'</div></div>';
 
-  h += '<div class="sep">♡ ✿ ♡</div>' + secHtml("WEAPON",  "あなたの武器",        D.buki[r.stem]);
-  h += '<div class="sep">♡ ✿ ♡</div>' + secHtml("SIGN",    "あなたの看板",        D.kanban[r.year]);
-  h += '<div class="sep">♡ ✿ ♡</div>' + secHtml("WIN",     "稼ぐ時の勝ちパターン", D.kachi[r.month], extraHtml(r.month));
-  h += '<div class="sep">♡ ✿ ♡</div>' + secHtml("RECEIVE", "お金の受け取り方",    D.uketori[r.day]);
-  h += '<div class="sep">♡ ✿ ♡</div>' + seasonHtml(r.month);
+  h += SEP + secHtml("WEAPON",  "あなたの武器",        D.buki[r.stem]);
+  h += SEP + secHtml("SIGN",    "あなたの看板",        D.kanban[r.year]);
+  h += SEP + seasonHtml(r.month);
+  h += SEP + secHtml("WIN",     "稼ぐ時の勝ちパターン", D.kachi[r.month], extraHtml(r.month));
+  h += SEP + secHtml("RECEIVE", "お金の受け取り方",    D.uketori[r.day]);
+  h += CTA;
   h += '<button class="again" id="again">もう一度診断する</button>';
   return h;
 }
@@ -352,21 +380,40 @@ function log(y, m, d, h, r, p){   // のりぴのデータ収集用。利用者�
   } catch (e) { /* 記録に失敗しても診断は止めない */ }
 }
 
+var by = document.getElementById("by"), bm = document.getElementById("bm"), bdd = document.getElementById("bdd");
+function opts(el, n, ph) {
+  var h = '<option value="" disabled selected>' + ph + '</option>';
+  for (var i = 1; i <= n; i++) h += '<option value="' + i + '">' + i + '</option>';
+  var cur = el.value; el.innerHTML = h; if (cur && +cur <= n) el.value = cur;
+}
+function daysIn(y, m) {
+  if (!y || !m) return 31;
+  var leap = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+  return [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1];
+}
+function refreshDays() { opts(bdd, daysIn(+by.value, +bm.value), "日"); }
+opts(bm, 12, "月"); opts(bdd, 31, "日");
+by.addEventListener("input", refreshDays);
+bm.addEventListener("change", refreshDays);
+
 var hh = document.getElementById("hh");
 // 時柱は出さないので、結果が変わるのは「23時台かどうか」だけ
-hh.innerHTML = '<option value="">わからない</option>' +
+hh.innerHTML = '<option value="" disabled selected>選択する</option>' +
+  '<option value="unknown">わからない</option>' +
   '<option value="day">0:00 〜 22:59</option>' +
   '<option value="23">23:00 〜 23:59</option>';
 
 function run(){
   var err = document.getElementById("err");
-  var mm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(document.getElementById("bd").value || "");
-  if (!mm) { err.textContent = "生年月日を選んでください"; err.hidden = false; return; }
-  var y = +mm[1], m = +mm[2], d = +mm[3];
-  if (y < 1900 || y > 2030) { err.textContent = "1900年〜2030年で入れてください"; err.hidden = false; return; }
-  err.hidden = true;
+  var y = +by.value, m = +bm.value, d = +bdd.value;
+  if (!y || y < 1900 || y > 2030) { err.textContent = "生まれた年を入れてください（1900〜2030）"; err.hidden = false; return; }
+  if (!m || !d) { err.textContent = "生まれた月と日を選んでください"; err.hidden = false; return; }
+  if (d > daysIn(y, m)) { err.textContent = y + "年" + m + "月は" + daysIn(y, m) + "日までです"; err.hidden = false; return; }
+  var hv = hh.value;
+  if (!hv) { err.textContent = "生まれた時間を選んでください（わからない でも大丈夫です）"; err.hidden = false; return; }
   // 節入りの判定は正午でそろえる（23時台だけ翌日として扱う）
-  var hv = hh.value, h = (hv === "23") ? 23 : null;
+  var h = (hv === "23") ? 23 : null;
+  err.hidden = true;
   var r = calcMoney(y, m, d, h), p = calcRatio(r);
   var out = document.getElementById("result");
   out.innerHTML = render(r); out.hidden = false;

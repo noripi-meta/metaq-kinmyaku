@@ -19,12 +19,13 @@ HTML = r"""<!doctype html>
 <style>
 *{box-sizing:border-box}
 :root{
-  --bg:#FDF2F6; --card:#FFFCFD; --ink:#5B4450; --sub:#A48B99; --line:#F6E2EA;
+  --bg:#FDF3F7; --card:#FFFDFE; --ink:#64505C; --sub:#AE97A3; --line:#F8E8EE;
   --gold:#E8BE86; --pink:#F08FB4; --pink-d:#D7638F; --lav:#AC8FDB;
 }
 html,body{margin:0;padding:0}
-body{background:var(--bg);color:var(--ink);font-size:16px;line-height:1.9;
-  font-family:"Hiragino Mincho ProN","Yu Mincho","MS PMincho",serif;
+body{background:var(--bg);color:var(--ink);font-size:16px;line-height:2.0;letter-spacing:.02em;
+  font-family:"Hiragino Maru Gothic ProN","ヒラギノ丸ゴ ProN W4","Hiragino Maru Gothic Pro",
+    -apple-system,"BIZ UDPGothic","Yu Gothic Medium","Meiryo",sans-serif;
   background:linear-gradient(180deg,#FDEFF5 0%,#FFF8FA 48%,#FCF1F6 100%);
   background-attachment:fixed;}
 .wrap{max-width:660px;margin:0 auto;padding:0 14px 60px}
@@ -32,21 +33,27 @@ header{text-align:center;padding:36px 14px 24px}
 header .badge{display:inline-block;padding:5px 16px;border:1px solid var(--pink);border-radius:999px;
   background:#fff;color:var(--pink-d);font-size:11px;font-weight:900;letter-spacing:.18em;margin-bottom:14px;
   box-shadow:0 3px 10px rgba(240,143,180,.22)}
-header h1{margin:0 0 9px;font-size:clamp(26px,6.4vw,34px);line-height:1.45;letter-spacing:.05em;font-weight:900;
+header h1{margin:0 0 11px;font-size:clamp(25px,6.2vw,33px);line-height:1.55;letter-spacing:.1em;font-weight:800;
   background:linear-gradient(90deg,#D7638F,#AC8FDB);-webkit-background-clip:text;background-clip:text;color:transparent}
 header p{margin:0;font-size:13.5px;color:var(--sub)}
 header h1 .hsub{display:block;margin:7px 0 0;font-size:.5em;letter-spacing:.34em;font-weight:900}
-.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px 19px;margin:0 0 16px;
-  box-shadow:0 10px 26px rgba(199,120,152,.11)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:26px 21px;margin:0 0 20px;
+  box-shadow:0 10px 30px rgba(199,120,152,.08)}
 label.fl{display:block;font-size:13px;font-weight:700;color:var(--pink-d);margin:0 0 7px;letter-spacing:.05em}
-input[type=date],select{width:100%;padding:14px 13px;font-size:16px;font-family:inherit;color:var(--ink);
-  background:#fff;border:1px solid var(--line);border-radius:13px;appearance:none;-webkit-appearance:none}
+input[type=date],select{width:100%;padding:15px 14px;font-size:16px;font-family:inherit;color:var(--ink);
+  background:#fff;border:1px solid var(--line);border-radius:17px;appearance:none;-webkit-appearance:none}
+select:invalid{color:#B9A3AE}
 input[type=date]:focus,select:focus{outline:none;border-color:var(--pink);box-shadow:0 0 0 3px rgba(240,143,180,.22)}
 .row{margin-bottom:16px}
+.ymd{display:flex;gap:8px}
+.ymd .f{flex:1;display:flex;align-items:center;gap:5px;min-width:0}
+.ymd .f:first-child{flex:1.25}
+.ymd i{font-style:normal;font-size:13px;color:var(--sub);flex:0 0 auto}
+.ymd input,.ymd select{min-width:0;text-align:center;padding:15px 6px}
 .hint{font-size:11.5px;color:var(--sub);margin-top:6px;line-height:1.7}
-.go{width:100%;margin-top:4px;padding:17px;border:none;border-radius:16px;cursor:pointer;
+.go{width:100%;margin-top:6px;padding:18px;border:none;border-radius:22px;cursor:pointer;
   background:linear-gradient(180deg,#F7A3C2,#E0749D);color:#fff;font-size:17px;font-weight:bold;
-  font-family:inherit;letter-spacing:.08em;box-shadow:0 6px 0 #C25680,0 12px 22px rgba(194,86,128,.28)}
+  font-family:inherit;letter-spacing:.12em;box-shadow:0 5px 0 #D98AAB,0 12px 24px rgba(194,86,128,.2)}
 .go:active{transform:translateY(3px);box-shadow:0 3px 0 #C25680}
 .err{color:var(--pink-d);font-size:13px;margin-top:10px;font-weight:700}
 /* 割合 */
@@ -86,20 +93,31 @@ input[type=date]:focus,select:focus{outline:none;border-color:var(--pink);box-sh
 .ex.warn b{background:#E8A66B}
 .ex.step b{background:var(--lav)}
 /* セクション */
-h2{font-size:23px;font-weight:900;line-height:1.4;margin:0 0 14px;letter-spacing:.03em;
-  padding-bottom:11px;border-bottom:1px solid var(--line)}
+h2{font-size:22px;font-weight:800;line-height:1.55;margin:0 0 15px;letter-spacing:.05em;
+  padding-bottom:12px;border-bottom:1px solid var(--line)}
 h2 span{display:block;font-size:10.5px;font-weight:900;letter-spacing:.2em;color:var(--pink);margin-bottom:5px}
 ul{list-style:none;margin:0 0 15px;padding:0}
-ul li{position:relative;padding:8px 0 8px 25px;font-size:15px;border-bottom:1px dashed #F6E6ED;line-height:1.75}
+ul li{position:relative;padding:9px 0 9px 26px;font-size:15px;border-bottom:1px dashed #F8EDF2;line-height:1.95}
 ul li:last-child{border-bottom:none}
 ul li::before{content:"";position:absolute;left:5px;top:17px;width:8px;height:8px;border-radius:50%;
   background:linear-gradient(135deg,#F7AFCA,#E8BE86)}
-.note{background:linear-gradient(135deg,#FFF6FA,#FDF1E9);border:1px solid #F6E2EA;border-radius:14px;
-  padding:13px 15px;font-size:14.5px;line-height:1.85}
+.note{background:linear-gradient(135deg,#FFF7FB,#FEF4EC);border:1px solid #F8E8EE;border-radius:18px;
+  padding:15px 17px;font-size:14.5px;line-height:2.0}
 .kotsu{background:#fff;border:1px dashed var(--pink);border-radius:14px;padding:12px 15px;font-size:14.5px;margin-top:13px}
 .kotsu b{color:var(--pink-d)}
-.sep{text-align:center;font-size:15px;letter-spacing:.35em;padding:14px 0 10px;color:var(--pink);opacity:.6}
-.again{width:100%;padding:15px;border:1px solid var(--line);border-radius:15px;background:#fff;
+.sep{text-align:center;padding:9px 0 14px;line-height:0}
+.sep .kao{display:inline-block;width:90px;height:auto}
+.cta{margin:26px 0 8px;padding:28px 22px;text-align:center;border-radius:26px;
+  background:linear-gradient(145deg,#FFF3F8,#FDEDE2);border:1px solid var(--line);
+  box-shadow:0 10px 26px rgba(199,120,152,.13)}
+.cta-t{margin:0 0 8px;font-size:12px;font-weight:900;letter-spacing:.2em;color:var(--pink)}
+.cta-b{margin:0 0 17px;font-size:14.5px;line-height:1.9;color:var(--ink)}
+.cta-b b{color:var(--pink-d);font-size:16px}
+.cta-btn{display:inline-block;max-width:100%;box-sizing:border-box;padding:16px 30px;border-radius:20px;
+  background:linear-gradient(180deg,#F7A3C2,#E0749D);color:#fff;text-decoration:none;font-weight:bold;
+  font-size:16px;letter-spacing:.1em;box-shadow:0 4px 0 #D98AAB,0 11px 22px rgba(194,86,128,.2)}
+.cta-btn:active{transform:translateY(2px);box-shadow:0 3px 0 #C25680}
+.again{width:100%;padding:16px;border:1px solid var(--line);border-radius:20px;background:#fff;
   color:var(--sub);font-size:15px;font-family:inherit;cursor:pointer;margin-top:6px}
 footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;line-height:1.9}
 [hidden]{display:none!important}
@@ -116,13 +134,16 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;
 
 <section class="card" id="form">
   <div class="row">
-    <label class="fl" for="bd">生年月日</label>
-    <input type="date" id="bd" min="1900-01-01" max="2030-12-31">
+    <label class="fl">生年月日</label>
+    <div class="ymd">
+      <span class="f"><input type="number" id="by" inputmode="numeric" placeholder="1990" min="1900" max="2030"><i>年</i></span>
+      <span class="f"><select id="bm" required></select><i>月</i></span>
+      <span class="f"><select id="bdd" required></select><i>日</i></span>
+    </div>
   </div>
   <div class="row">
     <label class="fl" for="hh">生まれた時間</label>
-    <select id="hh"></select>
-    <p class="hint">わからなくて大丈夫です。23時台生まれの方だけ、結果が変わります</p>
+    <select id="hh" required></select>
   </div>
   <button class="go" id="go">診断する</button>
   <p class="err" id="err" hidden></p>
@@ -190,7 +211,7 @@ function seasonHtml(un){
     return '<div class="st'+(j === k ? " on" : "")+'">'+esc(x.split("｜")[0])+'</div>'; }).join("");
   var now = d.stages[k].split("｜");
   return '<div class="card">' +
-    '<h2><span>STYLE</span>あなたの稼ぎ方のタイプ</h2>' +
+    '<h2><span>STYLE</span>あなたのビジネス設計タイプ</h2>' +
     '<div class="season-name">'+esc(s.label)+'</div>' +
     '<div class="season-sub">'+esc(d.sub)+'</div>' +
     '<div class="note">'+esc(d.flow)+'</div>' +
@@ -205,6 +226,12 @@ function extraHtml(un){
     '<div class="ex step"><b>今日からの一歩</b><span>'+esc(e[1])+'</span></div></div>';
 }
 
+var CTA = '<div class="cta">' +
+  '<p class="cta-b">あなたにぴったりな引き寄せのやり方を<br>' +
+  'のりぴのメルマガでお届けしています</p>' +
+  '<a class="cta-btn" href="https://www.reservestock.jp/subscribe/194781" target="_blank" rel="noopener">メルマガを受け取る（無料）</a>' +
+  '</div>';
+var SEP = '<div class="sep"><img class="kao" src="data:image/png;base64,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" alt="" width="90" height="30"></div>';
 function render(r){
   var p = calcRatio(r), q = 100 - p;
   var gFirst = (p > q) ? true : (p < q) ? false : (D.gyakuUns.indexOf(r.day) >= 0);
@@ -225,11 +252,12 @@ function render(r){
     listHtml(t1.items) +
     '<div class="kotsu"><b>稼ぐコツ</b>　'+esc(t1.kotsu)+'</div></div>';
 
-  h += '<div class="sep">♡ ✿ ♡</div>' + secHtml("WEAPON",  "あなたの武器",        D.buki[r.stem]);
-  h += '<div class="sep">♡ ✿ ♡</div>' + secHtml("SIGN",    "あなたの看板",        D.kanban[r.year]);
-  h += '<div class="sep">♡ ✿ ♡</div>' + secHtml("WIN",     "稼ぐ時の勝ちパターン", D.kachi[r.month], extraHtml(r.month));
-  h += '<div class="sep">♡ ✿ ♡</div>' + secHtml("RECEIVE", "お金の受け取り方",    D.uketori[r.day]);
-  h += '<div class="sep">♡ ✿ ♡</div>' + seasonHtml(r.month);
+  h += SEP + secHtml("WEAPON",  "あなたの武器",        D.buki[r.stem]);
+  h += SEP + secHtml("SIGN",    "あなたの看板",        D.kanban[r.year]);
+  h += SEP + seasonHtml(r.month);
+  h += SEP + secHtml("WIN",     "稼ぐ時の勝ちパターン", D.kachi[r.month], extraHtml(r.month));
+  h += SEP + secHtml("RECEIVE", "お金の受け取り方",    D.uketori[r.day]);
+  h += CTA;
   h += '<button class="again" id="again">もう一度診断する</button>';
   return h;
 }
@@ -248,21 +276,40 @@ function log(y, m, d, h, r, p){   // のりぴのデータ収集用。利用者�
   } catch (e) { /* 記録に失敗しても診断は止めない */ }
 }
 
+var by = document.getElementById("by"), bm = document.getElementById("bm"), bdd = document.getElementById("bdd");
+function opts(el, n, ph) {
+  var h = '<option value="" disabled selected>' + ph + '</option>';
+  for (var i = 1; i <= n; i++) h += '<option value="' + i + '">' + i + '</option>';
+  var cur = el.value; el.innerHTML = h; if (cur && +cur <= n) el.value = cur;
+}
+function daysIn(y, m) {
+  if (!y || !m) return 31;
+  var leap = (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0;
+  return [31, leap ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31][m - 1];
+}
+function refreshDays() { opts(bdd, daysIn(+by.value, +bm.value), "日"); }
+opts(bm, 12, "月"); opts(bdd, 31, "日");
+by.addEventListener("input", refreshDays);
+bm.addEventListener("change", refreshDays);
+
 var hh = document.getElementById("hh");
 // 時柱は出さないので、結果が変わるのは「23時台かどうか」だけ
-hh.innerHTML = '<option value="">わからない</option>' +
+hh.innerHTML = '<option value="" disabled selected>選択する</option>' +
+  '<option value="unknown">わからない</option>' +
   '<option value="day">0:00 〜 22:59</option>' +
   '<option value="23">23:00 〜 23:59</option>';
 
 function run(){
   var err = document.getElementById("err");
-  var mm = /^(\d{4})-(\d{2})-(\d{2})$/.exec(document.getElementById("bd").value || "");
-  if (!mm) { err.textContent = "生年月日を選んでください"; err.hidden = false; return; }
-  var y = +mm[1], m = +mm[2], d = +mm[3];
-  if (y < 1900 || y > 2030) { err.textContent = "1900年〜2030年で入れてください"; err.hidden = false; return; }
-  err.hidden = true;
+  var y = +by.value, m = +bm.value, d = +bdd.value;
+  if (!y || y < 1900 || y > 2030) { err.textContent = "生まれた年を入れてください（1900〜2030）"; err.hidden = false; return; }
+  if (!m || !d) { err.textContent = "生まれた月と日を選んでください"; err.hidden = false; return; }
+  if (d > daysIn(y, m)) { err.textContent = y + "年" + m + "月は" + daysIn(y, m) + "日までです"; err.hidden = false; return; }
+  var hv = hh.value;
+  if (!hv) { err.textContent = "生まれた時間を選んでください（わからない でも大丈夫です）"; err.hidden = false; return; }
   // 節入りの判定は正午でそろえる（23時台だけ翌日として扱う）
-  var hv = hh.value, h = (hv === "23") ? 23 : null;
+  var h = (hv === "23") ? 23 : null;
+  err.hidden = true;
   var r = calcMoney(y, m, d, h), p = calcRatio(r);
   var out = document.getElementById("result");
   out.innerHTML = render(r); out.hidden = false;
