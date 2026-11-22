@@ -102,6 +102,18 @@ ul li::before{content:"";position:absolute;left:5px;top:17px;width:8px;height:8p
 .kotsu b{color:var(--pink-d)}
 .sep{text-align:center;padding:9px 0 14px;line-height:0}
 .sep .kao{display:inline-block;width:90px;height:auto}
+.sem{margin:28px 0 10px;padding:30px 22px 24px;text-align:center;border-radius:26px;
+  background:linear-gradient(150deg,#FFE9F2,#FFF1E4);border:2px solid #F7C3D7;
+  box-shadow:0 12px 34px rgba(199,120,152,.2)}
+.sem-date{display:inline-block;margin:0 0 13px;padding:6px 18px;border-radius:999px;
+  background:var(--pink-d);color:#fff;font-size:12px;font-weight:900;letter-spacing:.12em}
+.sem-t{margin:0 0 11px;font-size:19px;font-weight:800;line-height:1.6;color:var(--pink-d)}
+.sem-b{margin:0 0 20px;font-size:15px;line-height:2.0;color:var(--ink)}
+.sem-btn{display:inline-block;max-width:100%;box-sizing:border-box;padding:18px 32px;border-radius:22px;
+  background:linear-gradient(180deg,#F58CB2,#D7527F);color:#fff;text-decoration:none;font-weight:bold;
+  font-size:17px;letter-spacing:.1em;box-shadow:0 5px 0 #B8456C,0 13px 26px rgba(184,69,108,.26)}
+.sem-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #B8456C}
+.sem-note{margin:18px 0 0;font-size:12px;line-height:1.9;color:#9A8290;text-align:left}
 .cta{margin:26px 0 8px;padding:28px 22px;text-align:center;border-radius:26px;
   background:linear-gradient(145deg,#FFF3F8,#FDEDE2);border:1px solid var(--line);
   box-shadow:0 10px 26px rgba(199,120,152,.13)}
@@ -217,6 +229,13 @@ function extraHtml(un){
     '<div class="ex step"><b>今日からの一歩</b><span>'+esc(e[1])+'</span></div></div>';
 }
 
+var SEMINAR = '<div class="sem">' +
+  '<p class="sem-date">12月4日 開催</p>' +
+  '<p class="sem-t">臨機応変型が50%以上の方へ</p>' +
+  '<p class="sem-b">あなたに向けたセミナーを<br>12月4日に開催します<br>ぜひご参加ください</p>' +
+  '<a class="sem-btn" href="https://www.reservestock.jp/events/1204008" target="_blank" rel="noopener">セミナーの詳細を見る</a>' +
+  '<p class="sem-note">※ 逆算設計型が50%以上の方もご参加いただけます。ご家族や従業員の方のために学びたい方も歓迎です。内容は臨機応変型の方に向けたものになります</p>' +
+  '</div>';
 var CTA = '<div class="cta">' +
   '<p class="cta-b">あなたにぴったりな引き寄せのやり方を<br>' +
   'のりぴのメルマガでお届けしています</p>' +
@@ -248,6 +267,7 @@ function render(r){
   h += SEP + seasonHtml(r.month);
   h += SEP + secHtml("WIN",     "稼ぐ時の勝ちパターン", D.kachi[r.month], extraHtml(r.month));
   h += SEP + secHtml("RECEIVE", "お金の受け取り方",    D.uketori[r.day]);
+  h += SEMINAR;
   h += CTA;
   h += '<button class="again" id="again">もう一度診断する</button>';
   return h;
