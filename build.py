@@ -102,18 +102,26 @@ ul li::before{content:"";position:absolute;left:5px;top:17px;width:8px;height:8p
 .kotsu b{color:var(--pink-d)}
 .sep{text-align:center;padding:9px 0 14px;line-height:0}
 .sep .kao{display:inline-block;width:90px;height:auto}
-.sem{margin:28px 0 10px;padding:30px 22px 24px;text-align:center;border-radius:26px;
-  background:linear-gradient(150deg,#FFE9F2,#FFF1E4);border:2px solid #F7C3D7;
-  box-shadow:0 12px 34px rgba(199,120,152,.2)}
-.sem-date{display:inline-block;margin:0 0 13px;padding:6px 18px;border-radius:999px;
-  background:var(--pink-d);color:#fff;font-size:12px;font-weight:900;letter-spacing:.12em}
-.sem-t{margin:0 0 11px;font-size:19px;font-weight:800;line-height:1.6;color:var(--pink-d)}
-.sem-b{margin:0 0 20px;font-size:15px;line-height:2.0;color:var(--ink)}
-.sem-btn{display:inline-block;max-width:100%;box-sizing:border-box;padding:18px 32px;border-radius:22px;
-  background:linear-gradient(180deg,#F58CB2,#D7527F);color:#fff;text-decoration:none;font-weight:bold;
-  font-size:17px;letter-spacing:.1em;box-shadow:0 5px 0 #B8456C,0 13px 26px rgba(184,69,108,.26)}
-.sem-btn:active{transform:translateY(3px);box-shadow:0 2px 0 #B8456C}
-.sem-note{margin:18px 0 0;font-size:12px;line-height:1.9;color:#9A8290;text-align:left}
+.sem{position:relative;margin:30px 0 12px;padding:34px 22px 26px;text-align:center;border-radius:28px;
+  background:linear-gradient(155deg,#FFF6DF 0%,#FFE7F1 48%,#FFEFE2 100%);
+  border:2.5px solid #F2B86B;box-shadow:0 14px 40px rgba(214,138,80,.26),0 0 0 6px rgba(255,236,206,.5)}
+.sem-free{display:inline-block;margin:0 0 15px;padding:9px 24px;border-radius:999px;color:#fff;
+  font-size:16px;font-weight:900;letter-spacing:.1em;
+  background:linear-gradient(135deg,#F2A03C,#E0749D);box-shadow:0 5px 16px rgba(226,140,80,.4)}
+.sem-date{margin:0 0 14px;font-size:14px;font-weight:800;letter-spacing:.06em;color:#B5713A}
+.sem-t{margin:0 0 12px;font-size:21px;font-weight:900;line-height:1.65;color:var(--pink-d)}
+.sem-b{margin:0 0 17px;font-size:14.5px;line-height:1.95;color:var(--ink)}
+.sem-pts{display:grid;gap:7px;margin:0 0 15px}
+.sem-pt{background:rgba(255,255,255,.78);border-radius:13px;padding:9px 12px;font-size:13.5px;
+  line-height:1.7;color:#6B5460}
+.sem-hot{display:grid;gap:6px;margin:0 0 20px}
+.sem-hot span{background:#FFF0F4;border:1px dashed #EE9BB8;border-radius:13px;padding:9px 12px;
+  font-size:13px;font-weight:700;line-height:1.7;color:#C8426F}
+.sem-btn{display:block;width:100%;box-sizing:border-box;padding:20px 20px;border-radius:24px;
+  background:linear-gradient(180deg,#FF9BBF,#D43F75);color:#fff;text-decoration:none;font-weight:bold;
+  font-size:18px;letter-spacing:.08em;box-shadow:0 6px 0 #AE3360,0 16px 30px rgba(174,51,96,.32)}
+.sem-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #AE3360}
+.sem-note{margin:18px 0 0;font-size:11.5px;line-height:1.9;color:#9A8290;text-align:left}
 .cta{margin:26px 0 8px;padding:28px 22px;text-align:center;border-radius:26px;
   background:linear-gradient(145deg,#FFF3F8,#FDEDE2);border:1px solid var(--line);
   box-shadow:0 10px 26px rgba(199,120,152,.13)}
@@ -230,11 +238,21 @@ function extraHtml(un){
 }
 
 var SEMINAR = '<div class="sem">' +
-  '<p class="sem-date">12月4日 開催</p>' +
-  '<p class="sem-t">臨機応変型が50%以上の方へ</p>' +
-  '<p class="sem-b">あなたに向けたセミナーを<br>12月4日に開催します<br>ぜひご参加ください</p>' +
-  '<a class="sem-btn" href="https://www.reservestock.jp/events/1204008" target="_blank" rel="noopener">セミナーの詳細を見る</a>' +
-  '<p class="sem-note">※ 逆算設計型が50%以上の方もご参加いただけます。ご家族や従業員の方のために学びたい方も歓迎です。内容は臨機応変型の方に向けたものになります</p>' +
+  '<p class="sem-free">参加費 無料 🎁</p>' +
+  '<p class="sem-date">12月4日（金）21:00〜22:30</p>' +
+  '<p class="sem-t">目標設定が苦手な人のための<br>願望実現法 ✨</p>' +
+  '<p class="sem-b">臨機応変型が50%以上のあなたに向けた<br>90分のオンラインセミナーです 💝</p>' +
+  '<div class="sem-pts">' +
+    '<span class="sem-pt">ゲストは田中克成さん 🎤</span>' +
+    '<span class="sem-pt">ZOOMだから、スマホからでも参加できます 📱</span>' +
+    '<span class="sem-pt">アバター参加もOKです 😊</span>' +
+  '</div>' +
+  '<div class="sem-hot">' +
+    '<span>先着30名・埋まり次第しめきりです ⏳</span>' +
+    '<span>アーカイブはなし、当日のライブだけです 📼</span>' +
+  '</div>' +
+  '<a class="sem-btn" href="https://www.reservestock.jp/events/1204008" target="_blank" rel="noopener">無料で申し込む 🎉</a>' +
+  '<p class="sem-note">※ 逆算設計型が50%以上の方もご参加いただけます。ご家族や従業員の方のために学びたい方も歓迎です。内容は臨機応変型の方に向けたものになります 🙌</p>' +
   '</div>';
 var CTA = '<div class="cta">' +
   '<p class="cta-b">あなたにぴったりな引き寄せのやり方を<br>' +
