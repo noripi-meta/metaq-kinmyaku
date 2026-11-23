@@ -406,15 +406,16 @@ function drawShare(r, p, done, fail){
       c.beginPath(); c.strokeStyle = col; c.lineWidth = w || 1; c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke();
     }
     /* 見出し */
-    ctrSp("KINMYAKU", 238, "21px " + MIN, GOLD2, 9);
-    ctr("引き寄せ四柱推命　金脈編", 274, "42px " + MIN, NAVY);
-    line(330, 340, 694, 340, GOLD2, 1);
-    c.beginPath(); c.fillStyle = GOLD2; c.arc(512, 340, 4, 0, 6.2832); c.fill();
+    ctrSp("KINMYAKU", 222, "21px " + MIN, GOLD2, 9);
+    ctr("引き寄せ四柱推命", 252, "41px " + MIN, NAVY);
+    ctr("金脈編", 306, "33px " + MIN, NAVY);
+    line(344, 358, 680, 358, GOLD2, 1);
+    c.beginPath(); c.fillStyle = GOLD2; c.arc(512, 358, 4, 0, 6.2832); c.fill();
     /* タイプ名 */
     var se = D.seasons[seasonOf(r.month)], sd = D.sdetail[se.label], gi = se.uns.indexOf(r.month);
     ctr("あなたの金脈タイプ", 382, "bold 21px " + GOT, GOLD);
     ctr(se.label, 418, "118px " + MIN, PINK);
-    ctr(sd.sub, 570, "bold 28px " + GOT, GOLD);
+    ctrSp(sd.sub, 566, "bold 35px " + GOT, GOLD, 3);
     /* 割合 */
     var q = 100 - p;
     c.font = "bold 22px " + GOT; c.fillStyle = PINK;
