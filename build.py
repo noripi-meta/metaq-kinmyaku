@@ -2,6 +2,7 @@
 import io, json, os, data
 BASE = os.path.dirname(os.path.abspath(__file__))
 ENGINE = io.open(os.path.join(BASE, "_engine.js"), encoding="utf-8").read()
+APP_URL = "https://noripi-meta.github.io/metaq-kinmyaku/"   # シェア用に案内するリンク
 LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbyy5ZLj9EREvMBEAwc3ljXZM5k1lVL-EELxUWYZXAjsCUkEZmOvzzx8p_To4hfvhB6Y/exec"   # 記録用GAS（スプレッドシートへ追記）
 
 D = {"gyakuStems":data.GYAKU_STEMS, "gyakuUns":data.GYAKU_UNS, "types":data.TYPES,
@@ -142,6 +143,16 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;
 .share-load{padding:30px 0;font-size:14px;color:#a8977f}
 .share-wrap img{width:100%;max-width:420px;border-radius:12px;box-shadow:0 6px 22px rgba(0,0,0,.14)}
 .share-tip{margin-top:10px;font-size:13px;color:#8a7c68;line-height:1.7}
+.sl{margin:16px auto 0;max-width:420px;padding:16px;border:1px solid #ecdfc6;border-radius:16px;
+  background:linear-gradient(180deg,#fffdf8,#fdf7ea)}
+.sl-t{margin:0 0 10px;font-size:13px;font-weight:700;color:#a8863c}
+.sl-url{display:block;padding:11px 12px;border:1px solid #efe4cf;border-radius:10px;background:#fff;
+  font-size:12px;color:#6b6152;word-break:break-all;line-height:1.5;user-select:all;-webkit-user-select:all}
+.sl-btn{width:100%;margin-top:10px;padding:13px;border:none;border-radius:14px;cursor:pointer;
+  background:linear-gradient(135deg,#e8c77a,#c69a42);color:#fff;font-size:15px;font-weight:700;
+  font-family:inherit;box-shadow:0 3px 10px rgba(198,154,66,.28)}
+.sl-btn.done{background:linear-gradient(135deg,#9ccc9e,#6fae74);box-shadow:none}
+.sl-note{margin:9px 0 0;font-size:12px;color:#9c8f7c;line-height:1.6}
 </style>
 </head>
 <body>
@@ -177,6 +188,7 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;
 <script>
 (function(){
 "use strict";
+var APP_URL = "__APPURL__";
 var LOG_ENDPOINT = "__ENDPOINT__";
 var D = __DATA__;
 
@@ -275,6 +287,26 @@ function shimeText(r, p){
 }
 function loadImg(src){
   return new Promise(function(ok, ng){ var i = new Image(); i.onload = function(){ ok(i); }; i.onerror = ng; i.src = src; });
+}
+function copyLink(btn){
+  var base = btn.textContent;
+  function ok(){
+    btn.textContent = "コピーしました ✨"; btn.classList.add("done");
+    setTimeout(function(){ btn.textContent = base; btn.classList.remove("done"); }, 2200);
+  }
+  function fallback(){
+    var ta = document.createElement("textarea");
+    ta.value = APP_URL; ta.setAttribute("readonly", "");
+    ta.style.position = "fixed"; ta.style.top = "0"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select(); ta.setSelectionRange(0, 99999);
+    var done = false;
+    try { done = document.execCommand("copy"); } catch (e) {}
+    document.body.removeChild(ta);
+    if (done) ok(); else btn.textContent = "上のリンクを長押ししてコピーしてください";
+  }
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(APP_URL).then(ok, fallback);
+  } else fallback();
 }
 function drawShare(r, p, done, fail){
   Promise.all([loadImg("share_bg.jpg"), loadImg("share_qr.png")]).then(function(im){
@@ -465,7 +497,13 @@ function run(){
   drawShare(r, p, function(url){
     if (!sw.isConnected) return;
     sw.innerHTML = '<img src="' + url + '" alt="あなたの金脈タイプ">' +
-      '<p class="share-tip">画像を長押しすると保存できます 📱<br>SNSやLINEでシェアしてください ✨</p>';
+      '<p class="share-tip">画像を長押しすると保存できます 📱<br>SNSやLINEでシェアしてください ✨</p>' +
+      '<div class="sl"><p class="sl-t">診断のリンク 🔗</p>' +
+      '<code class="sl-url">' + APP_URL + '</code>' +
+      '<button class="sl-btn" id="slCopy">リンクをコピーする 📋</button>' +
+      '<p class="sl-note">画像と一緒に貼ると、見た人がそのまま診断できます 😊</p></div>';
+    var cp = document.getElementById("slCopy");
+    if (cp) cp.addEventListener("click", function(){ copyLink(cp); });
   }, function(){ sw.innerHTML = ""; });
   document.getElementById("again").addEventListener("click", function(){
     out.hidden = true; out.innerHTML = "";
@@ -480,6 +518,6 @@ window.__money = { calcMoney: calcMoney, calcRatio: calcRatio, render: render };
 </html>
 """
 html = HTML.replace("__DATA__", json.dumps(D, ensure_ascii=False)) \
-           .replace("__ENGINE__", ENGINE).replace("__ENDPOINT__", LOG_ENDPOINT)
+           .replace("__ENGINE__", ENGINE).replace("__ENDPOINT__", LOG_ENDPOINT).replace("__APPURL__", APP_URL)
 io.open(os.path.join(BASE, "index.html"), "w", encoding="utf-8").write(html)
 print("生成: index.html", len(html), "文字")
