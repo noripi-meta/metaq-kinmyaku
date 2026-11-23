@@ -138,10 +138,8 @@ ul li::before{content:"";position:absolute;left:5px;top:17px;width:8px;height:8p
 footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;line-height:1.9}
 [hidden]{display:none!important}
 .share{margin:26px 0 8px}
-.share-btn{width:100%;padding:16px;border:none;border-radius:20px;cursor:pointer;
-  background:linear-gradient(135deg,#e8c77a,#c69a42);color:#fff;font-size:16px;font-weight:700;
-  box-shadow:0 4px 14px rgba(198,154,66,.3);font-family:inherit}
-.share-wrap{margin-top:16px;text-align:center}
+.share-wrap{text-align:center}
+.share-load{padding:30px 0;font-size:14px;color:#a8977f}
 .share-wrap img{width:100%;max-width:420px;border-radius:12px;box-shadow:0 6px 22px rgba(0,0,0,.14)}
 .share-tip{margin-top:10px;font-size:13px;color:#8a7c68;line-height:1.7}
 </style>
@@ -303,16 +301,20 @@ function drawShare(r, p, done, fail){
       c.beginPath(); c.strokeStyle = col; c.lineWidth = w || 1; c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke();
     }
     /* 見出し */
-    ctrSp("KINMYAKU", 222, "21px " + MIN, GOLD2, 9);
-    ctr("引き寄せ四柱推命", 252, "41px " + MIN, NAVY);
-    ctr("金脈編", 306, "33px " + MIN, NAVY);
-    line(344, 358, 680, 358, GOLD2, 1);
-    c.beginPath(); c.fillStyle = GOLD2; c.arc(512, 358, 4, 0, 6.2832); c.fill();
+    ctr("引き寄せ四柱推命", 236, "44px " + MIN, NAVY);
+    var bt = "金脈編", bfs = 28, bh2 = 50, byy = 304;
+    c.font = bfs + "px " + MIN;
+    var bw = Math.round(c.measureText(bt).width) + 72, bx = CX - bw / 2;
+    var bg2 = c.createLinearGradient(0, byy, 0, byy + bh2);
+    bg2.addColorStop(0, "#e4be70"); bg2.addColorStop(1, "#a2742a");
+    c.fillStyle = bg2; rr(bx, byy, bw, bh2, bh2 / 2); c.fill();
+    c.strokeStyle = GOLD2; c.lineWidth = 2; rr(bx, byy, bw, bh2, bh2 / 2); c.stroke();
+    c.fillStyle = "#ffffff"; c.fillText(bt, CX - c.measureText(bt).width / 2, byy + (bh2 - bfs * 1.42) / 2);
     /* タイプ名 */
     var se = D.seasons[seasonOf(r.month)], sd = D.sdetail[se.label], gi = se.uns.indexOf(r.month);
-    ctr("あなたの金脈タイプ", 382, "bold 21px " + GOT, GOLD);
-    ctr(se.label, 418, "118px " + MIN, PINK);
-    ctrSp(sd.sub, 566, "bold 35px " + GOT, GOLD, 3);
+    ctrSp("あなたの金脈タイプ", 386, "bold 26px " + GOT, GOLD, 2);
+    ctr(se.label, 424, "118px " + MIN, PINK);
+    ctrSp(sd.sub, 572, "bold 35px " + GOT, GOLD, 3);
     /* 割合 */
     var q = 100 - p;
     c.font = "bold 22px " + GOT; c.fillStyle = PINK;
@@ -407,8 +409,8 @@ function render(r){
   h += SEP + seasonHtml(r.month);
   h += SEP + secHtml("WIN",     "稼ぐ時の勝ちパターン", D.kachi[r.month], extraHtml(r.month));
   h += SEP + secHtml("RECEIVE", "お金の受け取り方",    D.uketori[r.day]);
-  h += '<div class="share"><button class="share-btn" id="shareBtn">シェア用の画像を作る ✨</button>' +
-       '<div class="share-wrap" id="shareWrap"></div></div>';
+  h += '<div class="share"><div class="share-wrap" id="shareWrap">' +
+       '<p class="share-load">シェア用の画像を作っています…</p></div></div>';
   h += SEMINAR;
   h += CTA;
   h += '<button class="again" id="again">もう一度診断する</button>';
@@ -459,16 +461,12 @@ function run(){
   document.getElementById("form").hidden = true;
   window.scrollTo(0, 0);
   log(y, m, d, hv, r, p);
-  var sb = document.getElementById("shareBtn");
-  if (sb) sb.addEventListener("click", function(){
-    sb.disabled = true; sb.textContent = "作成中…";
-    drawShare(r, p, function(url){
-      document.getElementById("shareWrap").innerHTML =
-        '<img src="' + url + '" alt="あなたの金脈タイプ">' +
-        '<p class="share-tip">画像を長押しすると保存できます 📱<br>SNSやLINEでシェアしてください ✨</p>';
-      sb.style.display = "none";
-    }, function(){ sb.disabled = false; sb.textContent = "もう一度ためす"; });
-  });
+  var sw = document.getElementById("shareWrap");
+  drawShare(r, p, function(url){
+    if (!sw.isConnected) return;
+    sw.innerHTML = '<img src="' + url + '" alt="あなたの金脈タイプ">' +
+      '<p class="share-tip">画像を長押しすると保存できます 📱<br>SNSやLINEでシェアしてください ✨</p>';
+  }, function(){ sw.innerHTML = ""; });
   document.getElementById("again").addEventListener("click", function(){
     out.hidden = true; out.innerHTML = "";
     document.getElementById("form").hidden = false; window.scrollTo(0, 0);
