@@ -6,7 +6,8 @@ LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbyy5ZLj9EREvMBEAwc3ljXZM
 
 D = {"gyakuStems":data.GYAKU_STEMS, "gyakuUns":data.GYAKU_UNS, "types":data.TYPES,
      "buki":data.BUKI, "kanban":data.KANBAN, "kachi":data.KACHI, "uketori":data.UKETORI,
-     "seasons":data.SEASONS, "extra":data.EXTRA, "sdetail":data.SEASON_DETAIL}
+     "seasons":data.SEASONS, "extra":data.EXTRA, "sdetail":data.SEASON_DETAIL,
+     "shime":data.SHIME}
 
 HTML = r"""<!doctype html>
 <html lang="ja">
@@ -136,6 +137,13 @@ ul li::before{content:"";position:absolute;left:5px;top:17px;width:8px;height:8p
   color:var(--sub);font-size:15px;font-family:inherit;cursor:pointer;margin-top:6px}
 footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;line-height:1.9}
 [hidden]{display:none!important}
+.share{margin:26px 0 8px}
+.share-btn{width:100%;padding:16px;border:none;border-radius:20px;cursor:pointer;
+  background:linear-gradient(135deg,#e8c77a,#c69a42);color:#fff;font-size:16px;font-weight:700;
+  box-shadow:0 4px 14px rgba(198,154,66,.3);font-family:inherit}
+.share-wrap{margin-top:16px;text-align:center}
+.share-wrap img{width:100%;max-width:420px;border-radius:12px;box-shadow:0 6px 22px rgba(0,0,0,.14)}
+.share-tip{margin-top:10px;font-size:13px;color:#8a7c68;line-height:1.7}
 </style>
 </head>
 <body>
@@ -260,6 +268,119 @@ var CTA = '<div class="cta">' +
   '<a class="cta-btn" href="https://www.reservestock.jp/subscribe/194781" target="_blank" rel="noopener">メルマガを受け取る（無料）✨</a>' +
   '</div>';
 var SEP = '<div class="sep"><img class="kao" src="data:image/png;base64,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" alt="" width="90" height="30"></div>';
+/* ── シェア用シート（1024x1536のカードを描く） ── */
+var MIN = '"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif';
+var GOT = '"Hiragino Sans","Hiragino Kaku Gothic ProN","Noto Sans JP","Yu Gothic",sans-serif';
+function shimeText(r, p){
+  var S = D.shime;
+  return S.type[p >= 50 ? "gyaku" : "rinki"] + S.stem[r.stem] + "、" + S.year[r.year] + "ながら、" + S.month[r.month];
+}
+function loadImg(src){
+  return new Promise(function(ok, ng){ var i = new Image(); i.onload = function(){ ok(i); }; i.onerror = ng; i.src = src; });
+}
+function drawShare(r, p, done, fail){
+  Promise.all([loadImg("share_bg.jpg"), loadImg("share_qr.png")]).then(function(im){
+    var W = 1024, H = 1536, CX = 512;
+    var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+    var c = cv.getContext("2d");
+    c.drawImage(im[0], 0, 0, W, H);
+    c.textBaseline = "top";
+    var NAVY = "#1a2b4a", GOLD = "#aa7e2a", GOLD2 = "#c69e4e",
+        PINK = "#e42870", PURPLE = "#7650e4", CREAM = "#fcf6e8";
+    function ctr(t, y, font, col){ c.font = font; c.fillStyle = col; c.fillText(t, CX - c.measureText(t).width / 2, y); }
+    function ctrSp(t, y, font, col, sp){
+      c.font = font; c.fillStyle = col;
+      var w = 0, i; for (i = 0; i < t.length; i++) w += c.measureText(t[i]).width + sp; w -= sp;
+      var x = CX - w / 2;
+      for (i = 0; i < t.length; i++){ c.fillText(t[i], x, y); x += c.measureText(t[i]).width + sp; }
+    }
+    function rr(x, y, w, h, rad){
+      c.beginPath(); c.moveTo(x + rad, y);
+      c.arcTo(x + w, y, x + w, y + h, rad); c.arcTo(x + w, y + h, x, y + h, rad);
+      c.arcTo(x, y + h, x, y, rad); c.arcTo(x, y, x + w, y, rad); c.closePath();
+    }
+    function line(x1, y1, x2, y2, col, w){
+      c.beginPath(); c.strokeStyle = col; c.lineWidth = w || 1; c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke();
+    }
+    /* 見出し */
+    ctrSp("KINMYAKU", 238, "21px " + MIN, GOLD2, 9);
+    ctr("引き寄せ四柱推命　金脈編", 274, "42px " + MIN, NAVY);
+    line(330, 340, 694, 340, GOLD2, 1);
+    c.beginPath(); c.fillStyle = GOLD2; c.arc(512, 340, 4, 0, 6.2832); c.fill();
+    /* タイプ名 */
+    var se = D.seasons[seasonOf(r.month)], sd = D.sdetail[se.label], gi = se.uns.indexOf(r.month);
+    ctr("あなたの金脈タイプ", 382, "bold 21px " + GOT, GOLD);
+    ctr(se.label, 418, "118px " + MIN, PINK);
+    ctr(sd.sub, 570, "bold 28px " + GOT, GOLD);
+    /* 割合 */
+    var q = 100 - p;
+    c.font = "bold 22px " + GOT; c.fillStyle = PINK;
+    c.fillText("臨機応変型", 162, 636);
+    var lw = c.measureText("臨機応変型").width;
+    c.font = "34px " + MIN; c.fillText(q + "%", 162 + lw + 12, 628);
+    var rt = p + "%"; c.font = "34px " + MIN; c.fillStyle = PURPLE;
+    var rw = c.measureText(rt).width; c.fillText(rt, 862 - rw, 628);
+    c.font = "bold 22px " + GOT;
+    c.fillText("逆算設計型", 862 - rw - 12 - c.measureText("逆算設計型").width, 636);
+    var x0 = 160, x1 = 864, by = 688, bh = 26;
+    c.fillStyle = PURPLE; rr(x0, by, x1 - x0, bh, bh / 2); c.fill();
+    var cut = x0 + Math.round((x1 - x0) * q / 100);
+    if (cut > x0 + bh){ c.fillStyle = PINK; rr(x0, by, cut - x0, bh, bh / 2); c.fill(); }
+    /* 3語 */
+    var pw = 206, gap = 18, ph = 58, px0 = CX - (pw * 3 + gap * 2) / 2, py = 772;
+    sd.stages.forEach(function(st, i){
+      var t = st.split("｜")[0], x = px0 + i * (pw + gap), col;
+      if (i === gi){
+        var g = c.createLinearGradient(0, py, 0, py + ph);
+        g.addColorStop(0, "#e4be70"); g.addColorStop(1, "#a2742a");
+        c.fillStyle = g; rr(x, py, pw, ph, ph / 2); c.fill();
+        c.strokeStyle = GOLD2; c.lineWidth = 2; rr(x, py, pw, ph, ph / 2); c.stroke();
+        col = "#ffffff";
+      } else {
+        c.fillStyle = "#fdfaf3"; rr(x, py, pw, ph, ph / 2); c.fill();
+        c.strokeStyle = "#e0cea9"; c.lineWidth = 2; rr(x, py, pw, ph, ph / 2); c.stroke();
+        col = "#766a5a";
+      }
+      c.font = "bold 25px " + GOT; c.fillStyle = col;
+      c.fillText(t, x + (pw - c.measureText(t).width) / 2, py + (ph - 33) / 2);
+    });
+    /* 締めの1文 */
+    c.fillStyle = NAVY; rr(78, 886, 868, 300, 16); c.fill();
+    c.strokeStyle = GOLD2; c.lineWidth = 1; rr(86, 894, 852, 284, 10); c.stroke();
+    ctr("あなたの金脈を活かすと", 922, "25px " + MIN, GOLD2);
+    line(148, 936, 348, 936, GOLD2, 1); line(676, 936, 876, 936, GOLD2, 1);
+    var txt = shimeText(r, p), ls, size, lh;
+    for (size = 42; size >= 24; size--){
+      c.font = size + "px " + MIN; lh = Math.round(size * 1.62);
+      var ch = txt.split("、"), parts = [], i;
+      for (i = 0; i < ch.length; i++) parts.push(i < ch.length - 1 ? ch[i] + "、" : ch[i]);
+      ls = []; var cur = "", over = false;
+      for (i = 0; i < parts.length; i++){
+        if (c.measureText(parts[i]).width > 744){ over = true; break; }
+        if (cur && c.measureText(cur + parts[i]).width > 744){ ls.push(cur); cur = parts[i]; }
+        else cur += parts[i];
+      }
+      if (over){ ls = []; cur = "";
+        for (i = 0; i < txt.length; i++){
+          if (cur && c.measureText(cur + txt[i]).width > 744){ ls.push(cur); cur = txt[i]; }
+          else cur += txt[i];
+        }
+      }
+      if (cur) ls.push(cur);
+      if (ls.length * lh <= 198) break;
+    }
+    var yy = 962 + (198 - ls.length * lh) / 2;
+    ls.forEach(function(t){ ctr(t, yy, size + "px " + MIN, CREAM); yy += lh; });
+    /* QRと誘導 */
+    c.drawImage(im[1], 236, 1256, 168, 168);
+    c.strokeStyle = GOLD2; c.lineWidth = 2; rr(230, 1250, 180, 180, 8); c.stroke();
+    c.font = "bold 29px " + GOT; c.fillStyle = NAVY; c.fillText("あなたも診断してみる", 442, 1286);
+    c.font = "20px " + GOT; c.fillStyle = "#7c7060"; c.fillText("引き寄せ四柱推命 金脈編", 442, 1332);
+    line(442, 1372, 772, 1372, GOLD2, 1);
+    c.font = "18px " + GOT; c.fillStyle = GOLD; c.fillText("無料・生年月日だけで診断できます", 442, 1382);
+    done(cv.toDataURL("image/png"));
+  }).catch(fail);
+}
 function render(r){
   var p = calcRatio(r), q = 100 - p;
   var gFirst = (p > q) ? true : (p < q) ? false : (D.gyakuUns.indexOf(r.day) >= 0);
@@ -285,6 +406,8 @@ function render(r){
   h += SEP + seasonHtml(r.month);
   h += SEP + secHtml("WIN",     "稼ぐ時の勝ちパターン", D.kachi[r.month], extraHtml(r.month));
   h += SEP + secHtml("RECEIVE", "お金の受け取り方",    D.uketori[r.day]);
+  h += '<div class="share"><button class="share-btn" id="shareBtn">シェア用の画像を作る ✨</button>' +
+       '<div class="share-wrap" id="shareWrap"></div></div>';
   h += SEMINAR;
   h += CTA;
   h += '<button class="again" id="again">もう一度診断する</button>';
@@ -335,6 +458,16 @@ function run(){
   document.getElementById("form").hidden = true;
   window.scrollTo(0, 0);
   log(y, m, d, hv, r, p);
+  var sb = document.getElementById("shareBtn");
+  if (sb) sb.addEventListener("click", function(){
+    sb.disabled = true; sb.textContent = "作成中…";
+    drawShare(r, p, function(url){
+      document.getElementById("shareWrap").innerHTML =
+        '<img src="' + url + '" alt="あなたの金脈タイプ">' +
+        '<p class="share-tip">画像を長押しすると保存できます 📱<br>SNSやLINEでシェアしてください ✨</p>';
+      sb.style.display = "none";
+    }, function(){ sb.disabled = false; sb.textContent = "もう一度ためす"; });
+  });
   document.getElementById("again").addEventListener("click", function(){
     out.hidden = true; out.innerHTML = "";
     document.getElementById("form").hidden = false; window.scrollTo(0, 0);
