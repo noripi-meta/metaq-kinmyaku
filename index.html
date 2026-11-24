@@ -843,6 +843,11 @@ function show(r, p){
   }, function(){ sw.innerHTML = ""; });
   var lg = document.getElementById("lgGo");
   if (lg) lg.addEventListener("click", doLogin);
+  // スマホのキーボードの「開く／Go」でもログインできるように
+  var lm = document.getElementById("lgMail");
+  if (lm) lm.addEventListener("keydown", function(e){
+    if (e.key === "Enter" || e.keyCode === 13) { e.preventDefault(); doLogin(); }
+  });
   document.getElementById("again").addEventListener("click", function(){
     out.hidden = true; out.innerHTML = "";
     document.getElementById("form").hidden = false; window.scrollTo(0, 0);
