@@ -132,6 +132,16 @@ ul li::before{content:"";position:absolute;left:5px;top:17px;width:8px;height:8p
 .lock-l span{background:rgba(255,255,255,.82);border-radius:13px;
   padding:12px 15px;font-size:15px;font-weight:800;color:#8C7483}
 .lock-l span::before{content:"🔒 ";font-weight:400}
+.lock-l span.bonus{background:rgba(255,255,255,.52);font-size:14px;font-weight:700;color:#9A8392}
+.lock-l span.bonus::before{content:"✨ "}
+/* 「まだの方」「登録済みの方」の仕切り */
+.lg-sec{display:flex;align-items:center;gap:11px;margin:24px 0 13px;
+  font-size:12.5px;font-weight:900;letter-spacing:.08em;color:#A98A62}
+.lg-sec::before,.lg-sec::after{content:"";flex:1 1 0;height:1px;background:#EAD6B8}
+.lock-cta{display:block;width:100%;box-sizing:border-box;padding:17px 14px;border-radius:999px;
+  color:#fff;font-size:17px;font-weight:900;text-decoration:none;line-height:1.4;
+  background:linear-gradient(135deg,#F2A0BC,#DB7FA4);box-shadow:0 7px 20px rgba(219,127,164,.42)}
+.lock-note{margin:11px 0 0;font-size:12.5px;line-height:1.9;color:var(--sub)}
 .lg{display:grid;gap:9px}
 .lg input{width:100%;padding:13px 14px;font-size:16px;border:1.5px solid var(--line);
   border-radius:13px;background:#fff;color:var(--ink);font-family:inherit}
@@ -280,18 +290,23 @@ function seasonOf(un){
 }
 function lockHtml(){
   return '<div class="lock">' +
-    '<p class="lock-k">メルマガ登録の方だけ 🔑</p>' +
-    '<p class="lock-t">まだ、あと3枚あります</p>' +
-    '<p class="lock-s">あなたのタイプ別の「やること」も開きます ✨</p>' +
+    '<p class="lock-k">ここから先は メルマガ読者さま限定 🔑</p>' +
+    '<p class="lock-t">もっと詳しく見たい方へ</p>' +
+    '<p class="lock-s">鍵のかかっている3つが、そのまま開きます ✨</p>' +
     '<div class="lock-l"><span>あなたの武器</span><span>稼ぐ時の勝ちパターン</span>' +
-      '<span>お金の受け取り方</span></div>' +
+      '<span>お金の受け取り方</span>' +
+      '<span class="bonus">シェア画像が「金脈鑑定書」に変わります</span></div>' +
+    '<p class="lg-sec">メルマガがまだの方</p>' +
+    '<a class="lock-cta" href="'+MAG_URL+'" target="_blank" rel="noopener">無料で登録して、続きを見る 💌</a>' +
+    '<p class="lock-note">のりぴのメルマガ「宇宙×IQ 引き寄せロジック」に登録すると、<br>' +
+    'そのあとすぐ、この先が開きます。登録は無料です。</p>' +
+    '<p class="lg-sec">すでに登録している方</p>' +
     '<div class="lg">' +
       '<input id="lgMail" type="email" inputmode="email" autocomplete="email" placeholder="メールアドレス">' +
       '<button class="lg-btn" id="lgGo">詳しい版を見る ✨</button>' +
       '<p class="lg-msg" id="lgMsg"></p>' +
     '</div>' +
-    '<p class="lg-help">メルマガを受け取っているアドレスを入れてください 💌<br>' +
-    'まだの方は <a href="'+MAG_URL+'" target="_blank" rel="noopener">こちらから登録（無料）</a><br>' +
+    '<p class="lock-note">メルマガを受け取っているアドレスを入れてください。<br>' +
     '一度入れれば、次からはそのまま開きます 😊</p>' +
     '</div>';
 }
@@ -398,9 +413,9 @@ function drawShare(r, p, done, fail){
       c.beginPath(); c.strokeStyle = col; c.lineWidth = w || 1; c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke();
     }
     /* 見出し */
-    ctrSp("のりぴの", 196, "bold 22px " + GOT, GOLD, 6);
-    ctr("引き寄せ四柱推命", 236, "44px " + MIN, NAVY);
-    var bt = "金脈編", bfs = 28, bh2 = 50, byy = 304;
+    ctrSp("のりぴの", 216, "bold 22px " + GOT, GOLD, 6);
+    ctr("引き寄せ四柱推命", 254, "44px " + MIN, NAVY);
+    var bt = "金脈編", bfs = 28, bh2 = 50, byy = 322;
     c.font = bfs + "px " + MIN;
     var bw = Math.round(c.measureText(bt).width) + 72, bx = CX - bw / 2;
     var bg2 = c.createLinearGradient(0, byy, 0, byy + bh2);
@@ -410,25 +425,25 @@ function drawShare(r, p, done, fail){
     c.fillStyle = "#ffffff"; c.fillText(bt, CX - c.measureText(bt).width / 2, byy + (bh2 - bfs * 1.42) / 2);
     /* タイプ名 */
     var se = D.seasons[seasonOf(r.month)], sd = D.sdetail[se.label], gi = se.uns.indexOf(r.month);
-    ctrSp("あなたの金脈タイプ", 386, "bold 26px " + GOT, GOLD, 2);
-    ctr(se.label, 424, "118px " + MIN, PINK);
-    ctrSp(sd.sub, 572, "bold 35px " + GOT, GOLD, 3);
+    ctrSp("あなたの金脈タイプ", 398, "bold 26px " + GOT, GOLD, 2);
+    ctr(se.label, 430, "118px " + MIN, PINK);
+    ctrSp(sd.sub, 578, "bold 35px " + GOT, GOLD, 3);
     /* 割合 */
     var q = 100 - p;
     c.font = "bold 22px " + GOT; c.fillStyle = PINK;
-    c.fillText("臨機応変型", 162, 636);
+    c.fillText("臨機応変型", 162, 640);
     var lw = c.measureText("臨機応変型").width;
-    c.font = "34px " + MIN; c.fillText(q + "%", 162 + lw + 12, 628);
+    c.font = "34px " + MIN; c.fillText(q + "%", 162 + lw + 12, 632);
     var rt = p + "%"; c.font = "34px " + MIN; c.fillStyle = PURPLE;
-    var rw = c.measureText(rt).width; c.fillText(rt, 862 - rw, 628);
+    var rw = c.measureText(rt).width; c.fillText(rt, 862 - rw, 632);
     c.font = "bold 22px " + GOT;
-    c.fillText("逆算設計型", 862 - rw - 12 - c.measureText("逆算設計型").width, 636);
-    var x0 = 160, x1 = 864, by = 688, bh = 26;
+    c.fillText("逆算設計型", 862 - rw - 12 - c.measureText("逆算設計型").width, 640);
+    var x0 = 160, x1 = 864, by = 692, bh = 26;
     c.fillStyle = PURPLE; rr(x0, by, x1 - x0, bh, bh / 2); c.fill();
     var cut = x0 + Math.round((x1 - x0) * q / 100);
     if (cut > x0 + bh){ c.fillStyle = PINK; rr(x0, by, cut - x0, bh, bh / 2); c.fill(); }
     /* 3語 */
-    var pw = 206, gap = 18, ph = 58, px0 = CX - (pw * 3 + gap * 2) / 2, py = 772;
+    var pw = 206, gap = 18, ph = 58, px0 = CX - (pw * 3 + gap * 2) / 2, py = 776;
     sd.stages.forEach(function(st, i){
       var t = st.split("｜")[0], x = px0 + i * (pw + gap), col;
       if (i === gi){
@@ -482,7 +497,7 @@ function drawShare(r, p, done, fail){
     done(cv.toDataURL("image/png"));
   }).catch(fail);
 }
-/* ── 金脈鑑定書（登録版のシェア画像。1080x1536の紺地） ── */
+/* ── 金脈鑑定書（登録版のシェア画像。1024x1536の紺地） ── */
 // 「、。」の区切りで折り返す。割れなくなったら諦めてそのまま出す（無限ループよけ）
 function wrapKu(c, txt, mw){
   var ch = [], cur = "", i;
