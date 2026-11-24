@@ -137,16 +137,15 @@ ul li::before{content:"";position:absolute;left:5px;top:17px;width:8px;height:8p
 .lg-msg{margin:2px 0 0;font-size:13.5px;line-height:1.8;color:var(--pink-d)}
 .lg-help{margin:12px 0 0;font-size:12.5px;line-height:1.85;color:var(--sub)}
 .lg-help a{color:var(--pink-d)}
-/* セミナー案内は紫系。金色の「鍵のカード」と一目で別物に見えるようにしている */
-.sem{position:relative;margin:30px 0 12px;padding:34px 22px 26px;text-align:center;border-radius:28px;
-  background:linear-gradient(155deg,#F4EFFF 0%,#EBE4FD 50%,#F6F1FF 100%);
+/* セミナー案内は紫系。金色の「鍵のカード」と一目で別物に見えるようにしている。
+   上にバナーを敷くので、中身の色はうんと薄くしてバナーを主役にしている */
+.sem{position:relative;margin:30px 0 12px;text-align:center;border-radius:28px;overflow:hidden;
+  background:linear-gradient(170deg,#FBF9FF 0%,#F2ECFD 100%);
   border:2.5px solid #B9A2E6;box-shadow:0 14px 40px rgba(126,90,196,.24),0 0 0 6px rgba(238,231,255,.6)}
-.sem-free{display:inline-block;margin:0 0 15px;padding:9px 24px;border-radius:999px;color:#fff;
-  font-size:16px;font-weight:900;letter-spacing:.1em;
-  background:linear-gradient(135deg,#9A7BE0,#6F5AC8);box-shadow:0 5px 16px rgba(118,86,186,.42)}
-.sem-date{margin:0 0 14px;font-size:14px;font-weight:800;letter-spacing:.06em;color:#6E57B4}
-.sem-t{margin:0 0 12px;font-size:21px;font-weight:900;line-height:1.65;color:#5B43A4}
-.sem-b{margin:0 0 17px;font-size:14.5px;line-height:1.95;color:#574A70}
+/* width/height を書いておくと、読み込み中に下の文字がガタッと動かない */
+.sem-img{display:block;width:100%;height:auto;border-bottom:2.5px solid #B9A2E6}
+.sem-in{padding:24px 22px 26px}
+.sem-b{margin:0 0 17px;font-size:14.5px;line-height:1.95;font-weight:700;color:#574A70}
 .sem-pts{display:grid;gap:7px;margin:0 0 15px}
 .sem-pt{background:rgba(255,255,255,.82);border-radius:13px;padding:9px 12px;font-size:13.5px;
   line-height:1.7;color:#5E5272}
@@ -440,14 +439,15 @@ function extraHtml(un){
     '<div class="ex step"><b>今日からの一歩</b><span>'+esc(e[1])+'</span></div></div>';
 }
 
+/* 日付・時間・タイトル・参加費無料はバナーの中に書いてあるので、文字では繰り返さない */
 var SEMINAR = '<div class="sem">' +
-  '<p class="sem-free">参加費 無料 🎁</p>' +
-  '<p class="sem-date">12月4日（金）21:00〜22:30</p>' +
-  '<p class="sem-t">目標設定が苦手な人のための<br>願望実現セミナー ✨</p>' +
+  '<img class="sem-img" src="seminar.jpg" width="1000" height="563" loading="lazy" ' +
+    'alt="目標設定が苦手な人のための願望実現セミナー。オンライン開催、12月4日（金）21:00〜22:30、参加費無料">' +
+  '<div class="sem-in">' +
   '<p class="sem-b">臨機応変型が50%以上の方に向けた<br>90分のオンラインセミナーです 💝</p>' +
   '<div class="sem-pts">' +
     '<span class="sem-pt">ゲストは田中克成さん 🎤</span>' +
-    '<span class="sem-pt">ZOOMだから、スマホからでも参加できます 📱</span>' +
+    '<span class="sem-pt">ZOOMだからスマホでも参加できます 📱</span>' +
     '<span class="sem-pt">アバター参加もOKです 😊</span>' +
   '</div>' +
   '<div class="sem-hot">' +
@@ -456,7 +456,7 @@ var SEMINAR = '<div class="sem">' +
   '</div>' +
   '<a class="sem-btn" href="https://www.reservestock.jp/events/1204008" target="_blank" rel="noopener">無料で申し込む 🎉</a>' +
   '<p class="sem-note">※ 逆算設計型が50%以上の方もご参加いただけます。ご家族や従業員の方のために学びたい方も歓迎です。内容は臨機応変型の方に向けたものになります 🙌</p>' +
-  '</div>';
+  '</div></div>';
 var SEP = '<div class="sep"></div>';
 /* ── シェア用シート（1024x1536のカードを描く） ── */
 var MIN = '"Hiragino Mincho ProN","Yu Mincho",YuMincho,serif';
