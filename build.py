@@ -327,7 +327,7 @@ function extraHtml(un){
 var SEMINAR = '<div class="sem">' +
   '<p class="sem-free">参加費 無料 🎁</p>' +
   '<p class="sem-date">12月4日（金）21:00〜22:30</p>' +
-  '<p class="sem-t">目標設定が苦手な人のための<br>願望実現法 ✨</p>' +
+  '<p class="sem-t">目標設定が苦手な人のための<br>願望実現セミナー ✨</p>' +
   '<p class="sem-b">臨機応変型が50%以上のあなたに向けた<br>90分のオンラインセミナーです 💝</p>' +
   '<div class="sem-pts">' +
     '<span class="sem-pt">ゲストは田中克成さん 🎤</span>' +
