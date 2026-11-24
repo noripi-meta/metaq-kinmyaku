@@ -4,11 +4,15 @@ BASE = os.path.dirname(os.path.abspath(__file__))
 ENGINE = io.open(os.path.join(BASE, "_engine.js"), encoding="utf-8").read()
 APP_URL = "https://noripi-meta.github.io/metaq-kinmyaku/"   # シェア用に案内するリンク
 LOG_ENDPOINT = "https://script.google.com/macros/s/AKfycbyy5ZLj9EREvMBEAwc3ljXZM5k1lVL-EELxUWYZXAjsCUkEZmOvzzx8p_To4hfvhB6Y/exec"   # 記録用GAS（スプレッドシートへ追記）
+AUTH_ENDPOINT = "https://script.google.com/macros/s/AKfycbyEk0tnupchygK6NtYLF0bVjpHn-oE2lmlseGqmFWjI0E82lyi3rneojssRi1g6BlUaAg/exec"   # 読者確認GAS
+MAG_URL = "https://www.reservestock.jp/subscribe/194781"   # メルマガ登録
 
 D = {"gyakuStems":data.GYAKU_STEMS, "gyakuUns":data.GYAKU_UNS, "types":data.TYPES,
      "buki":data.BUKI, "kanban":data.KANBAN, "kachi":data.KACHI, "uketori":data.UKETORI,
      "seasons":data.SEASONS, "extra":data.EXTRA, "sdetail":data.SEASON_DETAIL,
-     "shime":data.SHIME}
+     "shime":data.SHIME,
+          "nedan":data.NEDAN, "first":data.FIRST,
+     "tlong":data.TYPE_LONG, "slong":data.STAGE_LONG}
 
 HTML = r"""<!doctype html>
 <html lang="ja">
@@ -104,6 +108,40 @@ ul li::before{content:"";position:absolute;left:5px;top:17px;width:8px;height:8p
 .kotsu b{color:var(--pink-d)}
 .sep{width:150px;height:1px;margin:17px auto 21px;border:none;
   background:linear-gradient(90deg,rgba(232,190,134,0),#E8BE86 50%,rgba(232,190,134,0))}
+/* 登録版だけに出る行 */
+.deep{margin-top:15px;background:linear-gradient(135deg,#FBF7FF,#FFF4F9);
+  border:1px solid #EBDFF6;border-radius:17px;padding:15px 16px 13px}
+.deep-t{margin:0 0 8px;font-size:12.5px;font-weight:900;letter-spacing:.09em;color:var(--lav)}
+.deep p{margin:0 0 7px;font-size:14.5px;line-height:1.95;color:var(--ink)}
+.deep p:last-child{margin-bottom:0}
+.pri{display:grid;gap:9px;margin-top:14px}
+.pri div{background:linear-gradient(135deg,#FFFBF3,#FFF6EC);border:1px solid #F0DCBC;border-radius:14px;
+  padding:11px 14px;font-size:14px;line-height:1.9}
+.pri b{display:block;font-size:12px;letter-spacing:.1em;color:#B5813A;margin-bottom:3px}
+/* 鍵のかかったカード */
+.lock{position:relative;margin:26px 0 12px;padding:30px 20px 24px;text-align:center;border-radius:28px;
+  background:linear-gradient(155deg,#FFF3DC 0%,#FFE8F0 52%,#FFF1E2 100%);
+  border:2.5px solid #E8BE86;box-shadow:0 14px 40px rgba(200,150,90,.28),0 0 0 6px rgba(255,243,224,.55)}
+.lock-k{display:inline-block;margin:0 0 13px;padding:8px 22px;border-radius:999px;color:#fff;
+  font-size:14px;font-weight:900;letter-spacing:.08em;
+  background:linear-gradient(135deg,#E0A64C,#DB7FA4);box-shadow:0 5px 16px rgba(210,150,90,.42)}
+.lock-t{margin:0 0 7px;font-size:23px;font-weight:900;line-height:1.55;color:var(--pink-d)}
+.lock-s{margin:0 0 17px;font-size:14px;color:#7D6670;line-height:1.85}
+.lock-l{display:grid;gap:8px;margin:0 0 19px;text-align:left}
+.lock-l span{background:rgba(255,255,255,.82);border-radius:13px;
+  padding:12px 15px;font-size:15px;font-weight:800;color:#8C7483}
+.lock-l span::before{content:"🔒 ";font-weight:400}
+.lg{display:grid;gap:9px}
+.lg input{width:100%;padding:13px 14px;font-size:16px;border:1.5px solid var(--line);
+  border-radius:13px;background:#fff;color:var(--ink);font-family:inherit}
+.lg input:focus{outline:none;border-color:var(--gold)}
+.lg-btn{width:100%;padding:14px;border:none;border-radius:999px;color:#fff;font-size:16px;
+  font-weight:900;font-family:inherit;cursor:pointer;
+  background:linear-gradient(135deg,#E8BE86,#D79F5C);box-shadow:0 6px 18px rgba(200,150,90,.35)}
+.lg-btn:disabled{opacity:.55}
+.lg-msg{margin:2px 0 0;font-size:13.5px;line-height:1.8;color:var(--pink-d)}
+.lg-help{margin:12px 0 0;font-size:12.5px;line-height:1.85;color:var(--sub)}
+.lg-help a{color:var(--pink-d)}
 .sem{position:relative;margin:30px 0 12px;padding:34px 22px 26px;text-align:center;border-radius:28px;
   background:linear-gradient(155deg,#FFF6DF 0%,#FFE7F1 48%,#FFEFE2 100%);
   border:2.5px solid #F2B86B;box-shadow:0 14px 40px rgba(214,138,80,.26),0 0 0 6px rgba(255,236,206,.5)}
@@ -190,6 +228,13 @@ footer{text-align:center;font-size:11px;color:var(--sub);padding:26px 14px 10px;
 "use strict";
 var APP_URL = "__APPURL__";
 var LOG_ENDPOINT = "__ENDPOINT__";
+var AUTH_ENDPOINT = "__AUTH__";
+var MAG_URL = "__MAGURL__";
+/* ── 登録版の鍵。確認できた人のメアドだけを、その端末に覚えておく ── */
+var MKEY = "mk_member";
+function memberMail(){ try { return localStorage.getItem(MKEY) || ""; } catch (e) { return ""; } }
+function setMember(m){ try { localStorage.setItem(MKEY, m); } catch (e) { /* 保存できなくても今回は見られる */ } }
+var UNLOCKED = !!memberMail();
 var D = __DATA__;
 
 // ====== 四柱推命エンジン（MetaQ占いアプリから移植・ISD実機検証済み） ======
@@ -232,6 +277,23 @@ function seasonOf(un){
   for (var i = 0; i < D.seasons.length; i++) if (D.seasons[i].uns.indexOf(un) >= 0) return i;
   return -1;
 }
+function lockHtml(){
+  return '<div class="lock">' +
+    '<p class="lock-k">メルマガ登録の方だけ 🔑</p>' +
+    '<p class="lock-t">まだ、あと3枚あります</p>' +
+    '<p class="lock-s">あなたのタイプ別の「やること」も開きます ✨</p>' +
+    '<div class="lock-l"><span>あなたの武器</span><span>稼ぐ時の勝ちパターン</span>' +
+      '<span>お金の受け取り方</span></div>' +
+    '<div class="lg">' +
+      '<input id="lgMail" type="email" inputmode="email" autocomplete="email" placeholder="メールアドレス">' +
+      '<button class="lg-btn" id="lgGo">詳しい版を見る ✨</button>' +
+      '<p class="lg-msg" id="lgMsg"></p>' +
+    '</div>' +
+    '<p class="lg-help">メルマガを受け取っているアドレスを入れてください 💌<br>' +
+    'まだの方は <a href="'+MAG_URL+'" target="_blank" rel="noopener">こちらから登録（無料）</a><br>' +
+    '一度入れれば、次からはそのまま開きます 😊</p>' +
+    '</div>';
+}
 function seasonHtml(un){
   var i = seasonOf(un); if (i < 0) return "";
   var s = D.seasons[i], d = D.sdetail[s.label];
@@ -243,9 +305,16 @@ function seasonHtml(un){
     '<h2><span>STYLE</span>あなたのビジネス設計タイプ</h2>' +
     '<div class="season-name">'+esc(s.label)+'</div>' +
     '<div class="season-sub">'+esc(d.sub)+'</div>' +
-    '<div class="note">'+esc(d.flow)+'</div>' +
+    '<div class="note">' + (UNLOCKED
+        ? D.tlong[s.label].map(function(x){ return esc(x); }).join("<br>")
+        : esc(d.flow)) + '</div>' +
     '<div class="stages">'+strip+'</div>' +
     '<div class="st-now">あなたは<b>「'+esc(now[0])+'」</b>── '+esc(now[1])+'</div>' +
+    (UNLOCKED ? '<div class="deep"><p class="deep-t">「'+esc(now[0])+'」とは</p>' +
+      D.slong[un].map(function(x){ return '<p>'+esc(x)+'</p>'; }).join("") + '</div>' : '') +
+    (UNLOCKED ? '<div class="pri">' +
+      '<div><b>値段の決め方</b>'+esc(D.nedan[s.label])+'</div>' +
+      '<div><b>最初の1件</b>'+esc(D.first[s.label])+'</div></div>' : '') +
     '</div>';
 }
 function extraHtml(un){
@@ -271,11 +340,6 @@ var SEMINAR = '<div class="sem">' +
   '</div>' +
   '<a class="sem-btn" href="https://www.reservestock.jp/events/1204008" target="_blank" rel="noopener">無料で申し込む 🎉</a>' +
   '<p class="sem-note">※ 逆算設計型が50%以上の方もご参加いただけます。ご家族や従業員の方のために学びたい方も歓迎です。内容は臨機応変型の方に向けたものになります 🙌</p>' +
-  '</div>';
-var CTA = '<div class="cta">' +
-  '<p class="cta-b">あなたにぴったりな引き寄せのやり方を<br>' +
-  'のりぴのメルマガでお届けしています 💌</p>' +
-  '<a class="cta-btn" href="https://www.reservestock.jp/subscribe/194781" target="_blank" rel="noopener">メルマガを受け取る（無料）✨</a>' +
   '</div>';
 var SEP = '<div class="sep"></div>';
 /* ── シェア用シート（1024x1536のカードを描く） ── */
@@ -416,6 +480,162 @@ function drawShare(r, p, done, fail){
     done(cv.toDataURL("image/png"));
   }).catch(fail);
 }
+/* ── 金脈鑑定書（登録版のシェア画像。1080x1536の紺地） ── */
+// 「、。」の区切りで折り返す。割れなくなったら諦めてそのまま出す（無限ループよけ）
+function wrapKu(c, txt, mw){
+  var ch = [], cur = "", i;
+  for (i = 0; i < txt.length; i++){
+    cur += txt[i];
+    if (txt[i] === "、" || txt[i] === "。"){ ch.push(cur); cur = ""; }
+  }
+  if (cur) ch.push(cur);
+  function byChar(t){
+    var o = [], s = "", j;
+    for (j = 0; j < t.length; j++){
+      if (s && c.measureText(s + t[j]).width > mw){ o.push(s); s = t[j]; } else s += t[j];
+    }
+    if (s) o.push(s);
+    return o;
+  }
+  var out = []; cur = "";
+  for (i = 0; i < ch.length; i++){
+    if (cur && c.measureText(cur + ch[i]).width > mw){ out.push(cur); cur = ch[i]; }
+    else cur += ch[i];
+    while (c.measureText(cur).width > mw){
+      var w = byChar(cur);
+      if (w.length < 2) break;
+      out = out.concat(w.slice(0, -1)); cur = w[w.length - 1];
+    }
+  }
+  if (cur) out.push(cur);
+  return out;
+}
+function drawKantei(r, p, done, fail){
+  Promise.all([loadImg("kantei_bg.jpg"), loadImg("share_qr.png")]).then(function(im){
+    var W = 1080, H = 1920, CX = 540;
+    var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
+    var c = cv.getContext("2d");
+    c.drawImage(im[0], 0, 0, W, H);
+    c.textBaseline = "top";
+    var NAVY = "#1a2b4a", GOLD = "#d6b26a", GOLD2 = "#b08a46", CREAM = "#faf5e8",
+        PINK = "#ec78a0", PURPLE = "#967aec", INK = "#342e26", LAV = "#7656ba";
+    function ctr(t, y, font, col){ c.font = font; c.fillStyle = col; c.fillText(t, CX - c.measureText(t).width / 2, y); }
+    function ctrSp(t, y, font, col, sp){
+      c.font = font; c.fillStyle = col;
+      var w = 0, i; for (i = 0; i < t.length; i++) w += c.measureText(t[i]).width + sp; w -= sp;
+      var x = CX - w / 2;
+      for (i = 0; i < t.length; i++){ c.fillText(t[i], x, y); x += c.measureText(t[i]).width + sp; }
+    }
+    function rr(x, y, w, h, rad){
+      c.beginPath(); c.moveTo(x + rad, y);
+      c.arcTo(x + w, y, x + w, y + h, rad); c.arcTo(x + w, y + h, x, y + h, rad);
+      c.arcTo(x, y + h, x, y, rad); c.arcTo(x, y, x + w, y, rad); c.closePath();
+    }
+    function line(x1, y1, x2, y2, col, w){
+      c.beginPath(); c.strokeStyle = col; c.lineWidth = w || 1; c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke();
+    }
+    var se = D.seasons[seasonOf(r.month)], sd = D.sdetail[se.label], gi = se.uns.indexOf(r.month);
+    var now0 = sd.stages[gi].split("｜")[0];
+
+    /* 鑑定書の見出し */
+    ctrSp("引き寄せ四柱推命", 112, "24px " + GOT, GOLD, 7);
+    line(390, 156, 690, 156, GOLD2, 1);
+    ctr("金 脈 鑑 定 書", 182, "64px " + MIN, GOLD);
+    line(390, 282, 690, 282, GOLD2, 1);
+
+    /* タイプ */
+    ctrSp("あなたの金脈タイプ", 312, "bold 23px " + GOT, GOLD2, 4);
+    ctr(se.label, 350, "108px " + MIN, CREAM);
+    ctrSp(sd.sub, 486, "bold 32px " + GOT, GOLD, 3);
+
+    /* 4タイプの解説 */
+    c.font = "27px " + GOT;
+    var yy = 552, tl = D.tlong[se.label];
+    tl.forEach(function(t){
+      wrapKu(c, t, 820).forEach(function(ln){ ctr(ln, yy, "27px " + GOT, CREAM); yy += 42; });
+    });
+
+    /* 割合バー */
+    var BY = yy + 26, q = 100 - p;
+    c.font = "bold 24px " + GOT; c.fillStyle = PURPLE;
+    c.fillText("逆算設計型 " + p + "%", 150, BY);
+    c.fillStyle = PINK;
+    var rt = "臨機応変型 " + q + "%";
+    c.fillText(rt, 930 - c.measureText(rt).width, BY);
+    c.fillStyle = PINK; rr(150, BY + 52, 780, 22, 11); c.fill();
+    var cut = Math.round(780 * p / 100);
+    if (cut > 22){ c.fillStyle = PURPLE; rr(150, BY + 52, cut, 22, 11); c.fill(); }
+
+    /* 3語 */
+    var pw = 232, gap = 24, ph = 56, py = BY + 112, px0 = CX - (pw * 3 + gap * 2) / 2;
+    sd.stages.forEach(function(st, i){
+      var t = st.split("｜")[0], x = px0 + i * (pw + gap);
+      if (i === gi){
+        c.fillStyle = GOLD; rr(x, py, pw, ph, ph / 2); c.fill();
+        c.font = "bold 27px " + GOT; c.fillStyle = NAVY;
+      } else {
+        c.strokeStyle = GOLD2; c.lineWidth = 2; rr(x, py, pw, ph, ph / 2); c.stroke();
+        c.font = "27px " + GOT; c.fillStyle = GOLD;
+      }
+      c.fillText(t, x + (pw - c.measureText(t).width) / 2, py + (ph - 36) / 2);
+    });
+
+    /* 「○○」とは（アイボリーの紙） */
+    var TOP = py + ph + 36, PW = 860, PX = CX - PW / 2, IW = PW - 88;
+    var sl = D.slong[r.month], packed = [];
+    c.font = "27px " + GOT;
+    sl.forEach(function(t){ packed.push(wrapKu(c, t, IW)); });
+    var nL = 0; packed.forEach(function(a){ nL += a.length; });
+    var PH = 64 + nL * 44 + 10 * (packed.length - 1) + 26;
+    c.fillStyle = CREAM; rr(PX, TOP, PW, PH, 20); c.fill();
+    c.strokeStyle = GOLD2; c.lineWidth = 2; rr(PX, TOP, PW, PH, 20); c.stroke();
+    ctrSp("「" + now0 + "」とは", TOP + 24, "bold 26px " + GOT, LAV, 3);
+    yy = TOP + 72;
+    packed.forEach(function(a){
+      a.forEach(function(ln){ ctr(ln, yy, "27px " + GOT, INK); yy += 44; });
+      yy += 10;
+    });
+
+    /* お金の流れ（紺の額に二重罫） */
+    var txt = shimeText(r, p);
+    c.font = "40px " + MIN;
+    var ls = wrapKu(c, txt, 720), lh = 60;
+    var FY = TOP + PH + 52, FH = 56 + ls.length * lh + 34;
+    c.fillStyle = "#0e1b34"; rr(PX, FY, PW, FH, 18); c.fill();
+    c.strokeStyle = GOLD; c.lineWidth = 3; rr(PX, FY, PW, FH, 18); c.stroke();
+    c.strokeStyle = GOLD2; c.lineWidth = 1; rr(PX + 10, FY + 10, PW - 20, FH - 20, 12); c.stroke();
+    var lab = "あなたのお金の流れ", lsp = 5;
+    c.font = "bold 21px " + GOT;
+    var lw = 0, k; for (k = 0; k < lab.length; k++) lw += c.measureText(lab[k]).width + lsp;
+    lw = lw - lsp + 56;
+    c.fillStyle = GOLD; rr(CX - lw / 2, FY - 21, lw, 42, 21); c.fill();
+    ctrSp(lab, FY - 9, "bold 21px " + GOT, "#162440", lsp);
+    yy = FY + 56;
+    ls.forEach(function(t){ ctr(t, yy, "40px " + MIN, CREAM); yy += lh; });
+
+    /* 発行日と署名 */
+    var SY = FY + FH + 44, dt = new Date();
+    c.font = "21px " + GOT; c.fillStyle = GOLD2;
+    c.fillText(dt.getFullYear() + "年" + (dt.getMonth() + 1) + "月" + dt.getDate() + "日 発行", 150, SY);
+    c.font = "32px " + MIN; c.fillStyle = GOLD;
+    var sg = "のりぴ";
+    c.fillText(sg, 930 - c.measureText(sg).width, SY - 8);
+    line(790, SY + 34, 930, SY + 34, GOLD2, 1);
+
+    /* QR */
+    var QY = SY + 70;
+    c.drawImage(im[1], 210, QY, 142, 142);
+    c.strokeStyle = GOLD2; c.lineWidth = 2; rr(204, QY - 6, 154, 154, 8); c.stroke();
+    c.font = "bold 26px " + GOT; c.fillStyle = CREAM;
+    c.fillText("あなたも診断してみる", 392, QY + 18);
+    c.font = "18px " + GOT; c.fillStyle = GOLD2;
+    c.fillText("引き寄せ四柱推命 金脈編", 392, QY + 60);
+    line(392, QY + 96, 740, QY + 96, GOLD2, 1);
+    c.fillText("無料・生年月日だけで診断できます", 392, QY + 106);
+
+    done(cv.toDataURL("image/png"));
+  }).catch(fail);
+}
 function render(r){
   var p = calcRatio(r), q = 100 - p;
   var gFirst = (p > q) ? true : (p < q) ? false : (D.gyakuUns.indexOf(r.day) >= 0);
@@ -436,15 +656,17 @@ function render(r){
     listHtml(t1.items) +
     '<div class="kotsu"><b>稼ぐコツ</b>　'+esc(t1.kotsu)+'</div></div>';
 
-  h += SEP + secHtml("WEAPON",  "あなたの武器",        D.buki[r.stem]);
-  h += SEP + secHtml("SIGN",    "あなたの看板",        D.kanban[r.year]);
+  if (UNLOCKED) h += SEP + secHtml("WEAPON", "あなたの武器", D.buki[r.stem]);
+  h += SEP + secHtml("SIGN", "あなたの看板", D.kanban[r.year]);
   h += SEP + seasonHtml(r.month);
-  h += SEP + secHtml("WIN",     "稼ぐ時の勝ちパターン", D.kachi[r.month], extraHtml(r.month));
-  h += SEP + secHtml("RECEIVE", "お金の受け取り方",    D.uketori[r.day]);
+  if (UNLOCKED) {
+    h += SEP + secHtml("WIN",     "稼ぐ時の勝ちパターン", D.kachi[r.month], extraHtml(r.month));
+    h += SEP + secHtml("RECEIVE", "お金の受け取り方",    D.uketori[r.day]);
+  }
   h += '<div class="share"><div class="share-wrap" id="shareWrap">' +
        '<p class="share-load">シェア用の画像を作っています…</p></div></div>';
+  if (!UNLOCKED) h += lockHtml();
   h += SEMINAR;
-  h += CTA;
   h += '<button class="again" id="again">もう一度診断する</button>';
   return h;
 }
@@ -488,13 +710,19 @@ function run(){
   var h = (hv === "23") ? 23 : null;
   err.hidden = true;
   var r = calcMoney(y, m, d, h), p = calcRatio(r);
-  var out = document.getElementById("result");
-  out.innerHTML = render(r); out.hidden = false;
+  LAST = { r: r, p: p };
   document.getElementById("form").hidden = true;
   window.scrollTo(0, 0);
   log(y, m, d, hv, r, p);
+  show(r, p);
+}
+/* 結果を描く。ログインで鍵が開いた時も、ここをもう一度通る */
+var LAST = null;
+function show(r, p){
+  var out = document.getElementById("result");
+  out.innerHTML = render(r); out.hidden = false;
   var sw = document.getElementById("shareWrap");
-  drawShare(r, p, function(url){
+  (UNLOCKED ? drawKantei : drawShare)(r, p, function(url){
     if (!sw.isConnected) return;
     sw.innerHTML = '<img src="' + url + '" alt="あなたの金脈タイプ">' +
       '<p class="share-tip">画像を長押しすると保存できます 📱<br>SNSやLINEでシェアしてください ✨</p>' +
@@ -505,10 +733,30 @@ function run(){
     var cp = document.getElementById("slCopy");
     if (cp) cp.addEventListener("click", function(){ copyLink(cp); });
   }, function(){ sw.innerHTML = ""; });
+  var lg = document.getElementById("lgGo");
+  if (lg) lg.addEventListener("click", doLogin);
   document.getElementById("again").addEventListener("click", function(){
     out.hidden = true; out.innerHTML = "";
     document.getElementById("form").hidden = false; window.scrollTo(0, 0);
   });
+}
+/* メアドを送って、メルマガ読者かどうかGASに確かめてもらう */
+function doLogin(){
+  var em  = (document.getElementById("lgMail").value || "").trim();
+  var msg = document.getElementById("lgMsg");
+  var btn = document.getElementById("lgGo");
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) { msg.textContent = "メールアドレスを確かめてください"; return; }
+  if (!AUTH_ENDPOINT) { msg.textContent = "ただいま準備中です。少しお待ちください"; return; }
+  btn.disabled = true; msg.textContent = "確認しています…";
+  fetch(AUTH_ENDPOINT, { method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"},
+                         body: JSON.stringify({ email: em }) })
+    .then(function(res){ return res.json(); })
+    .then(function(j){
+      if (j && j.ok) { setMember(em); UNLOCKED = true; show(LAST.r, LAST.p); window.scrollTo(0, 0); }
+      else { btn.disabled = false; msg.textContent = (j && j.msg) || "確認できませんでした"; }
+    })
+    .catch(function(){ btn.disabled = false;
+      msg.textContent = "つながりませんでした。少し待ってから、もう一度お試しください"; });
 }
 document.getElementById("go").addEventListener("click", run);
 window.__money = { calcMoney: calcMoney, calcRatio: calcRatio, render: render };
@@ -518,6 +766,7 @@ window.__money = { calcMoney: calcMoney, calcRatio: calcRatio, render: render };
 </html>
 """
 html = HTML.replace("__DATA__", json.dumps(D, ensure_ascii=False)) \
-           .replace("__ENGINE__", ENGINE).replace("__ENDPOINT__", LOG_ENDPOINT).replace("__APPURL__", APP_URL)
+           .replace("__ENGINE__", ENGINE).replace("__ENDPOINT__", LOG_ENDPOINT).replace("__APPURL__", APP_URL) \
+           .replace("__AUTH__", AUTH_ENDPOINT).replace("__MAGURL__", MAG_URL)
 io.open(os.path.join(BASE, "index.html"), "w", encoding="utf-8").write(html)
 print("生成: index.html", len(html), "文字")
