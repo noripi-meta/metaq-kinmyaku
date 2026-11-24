@@ -153,26 +153,28 @@ ul li::before{content:"";position:absolute;left:5px;top:17px;width:8px;height:8p
 .lg-msg{margin:2px 0 0;font-size:13.5px;line-height:1.8;color:var(--pink-d)}
 .lg-help{margin:12px 0 0;font-size:12.5px;line-height:1.85;color:var(--sub)}
 .lg-help a{color:var(--pink-d)}
+/* セミナー案内は紫系。金色の「鍵のカード」と一目で別物に見えるようにしている */
 .sem{position:relative;margin:30px 0 12px;padding:34px 22px 26px;text-align:center;border-radius:28px;
-  background:linear-gradient(155deg,#FFF6DF 0%,#FFE7F1 48%,#FFEFE2 100%);
-  border:2.5px solid #F2B86B;box-shadow:0 14px 40px rgba(214,138,80,.26),0 0 0 6px rgba(255,236,206,.5)}
+  background:linear-gradient(155deg,#F4EFFF 0%,#EBE4FD 50%,#F6F1FF 100%);
+  border:2.5px solid #B9A2E6;box-shadow:0 14px 40px rgba(126,90,196,.24),0 0 0 6px rgba(238,231,255,.6)}
 .sem-free{display:inline-block;margin:0 0 15px;padding:9px 24px;border-radius:999px;color:#fff;
   font-size:16px;font-weight:900;letter-spacing:.1em;
-  background:linear-gradient(135deg,#F2A03C,#E0749D);box-shadow:0 5px 16px rgba(226,140,80,.4)}
-.sem-date{margin:0 0 14px;font-size:14px;font-weight:800;letter-spacing:.06em;color:#B5713A}
-.sem-t{margin:0 0 12px;font-size:21px;font-weight:900;line-height:1.65;color:var(--pink-d)}
-.sem-b{margin:0 0 17px;font-size:14.5px;line-height:1.95;color:var(--ink)}
+  background:linear-gradient(135deg,#9A7BE0,#6F5AC8);box-shadow:0 5px 16px rgba(118,86,186,.42)}
+.sem-date{margin:0 0 14px;font-size:14px;font-weight:800;letter-spacing:.06em;color:#6E57B4}
+.sem-t{margin:0 0 12px;font-size:21px;font-weight:900;line-height:1.65;color:#5B43A4}
+.sem-b{margin:0 0 17px;font-size:14.5px;line-height:1.95;color:#574A70}
 .sem-pts{display:grid;gap:7px;margin:0 0 15px}
-.sem-pt{background:rgba(255,255,255,.78);border-radius:13px;padding:9px 12px;font-size:13.5px;
-  line-height:1.7;color:#6B5460}
+.sem-pt{background:rgba(255,255,255,.82);border-radius:13px;padding:9px 12px;font-size:13.5px;
+  line-height:1.7;color:#5E5272}
 .sem-hot{display:grid;gap:6px;margin:0 0 20px}
-.sem-hot span{background:#FFF0F4;border:1px dashed #EE9BB8;border-radius:13px;padding:9px 12px;
+/* 急ぎの2行だけ、紫の中でピンクにして目立たせる */
+.sem-hot span{background:#FFF1F6;border:1px dashed #EE9BB8;border-radius:13px;padding:9px 12px;
   font-size:13px;font-weight:700;line-height:1.7;color:#C8426F}
 .sem-btn{display:block;width:100%;box-sizing:border-box;padding:20px 20px;border-radius:24px;
-  background:linear-gradient(180deg,#FF9BBF,#D43F75);color:#fff;text-decoration:none;font-weight:bold;
-  font-size:18px;letter-spacing:.08em;box-shadow:0 6px 0 #AE3360,0 16px 30px rgba(174,51,96,.32)}
-.sem-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #AE3360}
-.sem-note{margin:18px 0 0;font-size:11.5px;line-height:1.9;color:#9A8290;text-align:left}
+  background:linear-gradient(180deg,#A185E8,#6B4CC4);color:#fff;text-decoration:none;font-weight:bold;
+  font-size:18px;letter-spacing:.08em;box-shadow:0 6px 0 #533A9C,0 16px 30px rgba(83,58,156,.32)}
+.sem-btn:active{transform:translateY(4px);box-shadow:0 2px 0 #533A9C}
+.sem-note{margin:18px 0 0;font-size:11.5px;line-height:1.9;color:#8B7FA3;text-align:left}
 .cta{margin:26px 0 8px;padding:28px 22px;text-align:center;border-radius:26px;
   background:linear-gradient(145deg,#FFF3F8,#FDEDE2);border:1px solid var(--line);
   box-shadow:0 10px 26px rgba(199,120,152,.13)}
@@ -344,7 +346,7 @@ var SEMINAR = '<div class="sem">' +
   '<p class="sem-free">参加費 無料 🎁</p>' +
   '<p class="sem-date">12月4日（金）21:00〜22:30</p>' +
   '<p class="sem-t">目標設定が苦手な人のための<br>願望実現セミナー ✨</p>' +
-  '<p class="sem-b">臨機応変型が50%以上のあなたに向けた<br>90分のオンラインセミナーです 💝</p>' +
+  '<p class="sem-b">臨機応変型が50%以上の方に向けた<br>90分のオンラインセミナーです 💝</p>' +
   '<div class="sem-pts">' +
     '<span class="sem-pt">ゲストは田中克成さん 🎤</span>' +
     '<span class="sem-pt">ZOOMだから、スマホからでも参加できます 📱</span>' +
