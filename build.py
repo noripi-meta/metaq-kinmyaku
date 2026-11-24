@@ -298,10 +298,6 @@ function lockHtml(){
     '<div class="lock-l"><span>あなたの武器</span><span>稼ぐ時の勝ちパターン</span>' +
       '<span>お金の受け取り方</span>' +
       '<span class="bonus">シェア画像が「金脈鑑定書」に変わります</span></div>' +
-    '<p class="lg-sec">メルマガがまだの方</p>' +
-    '<a class="lock-cta" href="'+MAG_URL+'" target="_blank" rel="noopener">無料で登録して、続きを見る 💌</a>' +
-    '<p class="lock-note">のりぴのメルマガ「宇宙×IQ 引き寄せロジック」に登録すると、<br>' +
-    'そのあとすぐ、この先が開きます。登録は無料です。</p>' +
     '<p class="lg-sec">すでに登録している方</p>' +
     '<div class="lg">' +
       '<input id="lgMail" type="email" inputmode="email" autocomplete="email" placeholder="メールアドレス">' +
@@ -310,6 +306,10 @@ function lockHtml(){
     '</div>' +
     '<p class="lock-note">メルマガを受け取っているアドレスを入れてください。<br>' +
     '一度入れれば、次からはそのまま開きます 😊</p>' +
+    '<p class="lg-sec">メルマガがまだの方</p>' +
+    '<a class="lock-cta" href="'+MAG_URL+'" target="_blank" rel="noopener">無料で登録して、続きを見る 💌</a>' +
+    '<p class="lock-note">のりぴのメルマガ「宇宙×IQ 引き寄せロジック」に登録すると、<br>' +
+    'そのあとすぐ、この先が開きます。登録は無料です。</p>' +
     '</div>';
 }
 function seasonHtml(un){
