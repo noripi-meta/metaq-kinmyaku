@@ -397,6 +397,7 @@ function drawShare(r, p, done, fail){
       c.beginPath(); c.strokeStyle = col; c.lineWidth = w || 1; c.moveTo(x1, y1); c.lineTo(x2, y2); c.stroke();
     }
     /* 見出し */
+    ctrSp("のりぴの", 196, "bold 22px " + GOT, GOLD, 6);
     ctr("引き寄せ四柱推命", 236, "44px " + MIN, NAVY);
     var bt = "金脈編", bfs = 28, bh2 = 50, byy = 304;
     c.font = bfs + "px " + MIN;
@@ -474,7 +475,7 @@ function drawShare(r, p, done, fail){
     c.drawImage(im[1], 236, 1256, 168, 168);
     c.strokeStyle = GOLD2; c.lineWidth = 2; rr(230, 1250, 180, 180, 8); c.stroke();
     c.font = "bold 29px " + GOT; c.fillStyle = NAVY; c.fillText("あなたも診断してみる", 442, 1286);
-    c.font = "20px " + GOT; c.fillStyle = "#7c7060"; c.fillText("引き寄せ四柱推命 金脈編", 442, 1332);
+    c.font = "20px " + GOT; c.fillStyle = "#7c7060"; c.fillText("のりぴの 引き寄せ四柱推命 金脈編", 442, 1332);
     line(442, 1372, 772, 1372, GOLD2, 1);
     c.font = "18px " + GOT; c.fillStyle = GOLD; c.fillText("無料・生年月日だけで診断できます", 442, 1382);
     done(cv.toDataURL("image/png"));
@@ -512,7 +513,7 @@ function wrapKu(c, txt, mw){
 }
 function drawKantei(r, p, done, fail){
   Promise.all([loadImg("kantei_bg.jpg"), loadImg("share_qr.png")]).then(function(im){
-    var W = 1080, H = 1920, CX = 540;
+    var W = 1024, H = 1536, CX = 512;
     var cv = document.createElement("canvas"); cv.width = W; cv.height = H;
     var c = cv.getContext("2d");
     c.drawImage(im[0], 0, 0, W, H);
@@ -538,100 +539,91 @@ function drawKantei(r, p, done, fail){
     var now0 = sd.stages[gi].split("｜")[0];
 
     /* 鑑定書の見出し */
-    ctrSp("引き寄せ四柱推命", 112, "24px " + GOT, GOLD, 7);
-    line(390, 156, 690, 156, GOLD2, 1);
-    ctr("金 脈 鑑 定 書", 182, "64px " + MIN, GOLD);
-    line(390, 282, 690, 282, GOLD2, 1);
+    ctrSp("のりぴの 引き寄せ四柱推命", 96, "22px " + GOT, GOLD, 6);
+    line(362, 138, 662, 138, GOLD2, 1);
+    ctr("金 脈 鑑 定 書", 160, "56px " + MIN, GOLD);
+    line(362, 268, 662, 268, GOLD2, 1);
 
     /* タイプ */
-    ctrSp("あなたの金脈タイプ", 312, "bold 23px " + GOT, GOLD2, 4);
-    ctr(se.label, 350, "108px " + MIN, CREAM);
-    ctrSp(sd.sub, 486, "bold 32px " + GOT, GOLD, 3);
+    ctrSp("あなたの金脈タイプ", 292, "bold 21px " + GOT, GOLD2, 4);
+    ctr(se.label, 326, "92px " + MIN, CREAM);
+    ctrSp(sd.sub, 444, "bold 28px " + GOT, GOLD, 3);
 
     /* 4タイプの解説 */
-    c.font = "27px " + GOT;
-    var yy = 552, tl = D.tlong[se.label];
+    c.font = "24px " + GOT;
+    var yy = 500, tl = D.tlong[se.label];
     tl.forEach(function(t){
-      wrapKu(c, t, 820).forEach(function(ln){ ctr(ln, yy, "27px " + GOT, CREAM); yy += 42; });
+      wrapKu(c, t, 800).forEach(function(ln){ ctr(ln, yy, "24px " + GOT, CREAM); yy += 36; });
     });
 
     /* 割合バー */
-    var BY = yy + 26, q = 100 - p;
-    c.font = "bold 24px " + GOT; c.fillStyle = PURPLE;
-    c.fillText("逆算設計型 " + p + "%", 150, BY);
+    var BY = yy + 20, q = 100 - p;
+    c.font = "bold 22px " + GOT; c.fillStyle = PURPLE;
+    c.fillText("逆算設計型 " + p + "%", 136, BY);
     c.fillStyle = PINK;
     var rt = "臨機応変型 " + q + "%";
-    c.fillText(rt, 930 - c.measureText(rt).width, BY);
-    c.fillStyle = PINK; rr(150, BY + 52, 780, 22, 11); c.fill();
-    var cut = Math.round(780 * p / 100);
-    if (cut > 22){ c.fillStyle = PURPLE; rr(150, BY + 52, cut, 22, 11); c.fill(); }
+    c.fillText(rt, 888 - c.measureText(rt).width, BY);
+    c.fillStyle = PINK; rr(136, BY + 44, 752, 20, 10); c.fill();
+    var cut = Math.round(752 * p / 100);
+    if (cut > 20){ c.fillStyle = PURPLE; rr(136, BY + 44, cut, 20, 10); c.fill(); }
 
     /* 3語 */
-    var pw = 232, gap = 24, ph = 56, py = BY + 112, px0 = CX - (pw * 3 + gap * 2) / 2;
+    var pw = 216, gap = 20, ph = 50, py = BY + 96, px0 = CX - (pw * 3 + gap * 2) / 2;
     sd.stages.forEach(function(st, i){
       var t = st.split("｜")[0], x = px0 + i * (pw + gap);
       if (i === gi){
         c.fillStyle = GOLD; rr(x, py, pw, ph, ph / 2); c.fill();
-        c.font = "bold 27px " + GOT; c.fillStyle = NAVY;
+        c.font = "bold 25px " + GOT; c.fillStyle = NAVY;
       } else {
         c.strokeStyle = GOLD2; c.lineWidth = 2; rr(x, py, pw, ph, ph / 2); c.stroke();
-        c.font = "27px " + GOT; c.fillStyle = GOLD;
+        c.font = "25px " + GOT; c.fillStyle = GOLD;
       }
-      c.fillText(t, x + (pw - c.measureText(t).width) / 2, py + (ph - 36) / 2);
+      c.fillText(t, x + (pw - c.measureText(t).width) / 2, py + (ph - 33) / 2);
     });
 
     /* 「○○」とは（アイボリーの紙） */
-    var TOP = py + ph + 36, PW = 860, PX = CX - PW / 2, IW = PW - 88;
+    var TOP = py + ph + 30, PW = 824, PX = CX - PW / 2, IW = PW - 80;
     var sl = D.slong[r.month], packed = [];
-    c.font = "27px " + GOT;
+    c.font = "24px " + GOT;
     sl.forEach(function(t){ packed.push(wrapKu(c, t, IW)); });
     var nL = 0; packed.forEach(function(a){ nL += a.length; });
-    var PH = 64 + nL * 44 + 10 * (packed.length - 1) + 26;
+    var PH = 56 + nL * 38 + 8 * (packed.length - 1) + 22;
     c.fillStyle = CREAM; rr(PX, TOP, PW, PH, 20); c.fill();
     c.strokeStyle = GOLD2; c.lineWidth = 2; rr(PX, TOP, PW, PH, 20); c.stroke();
-    ctrSp("「" + now0 + "」とは", TOP + 24, "bold 26px " + GOT, LAV, 3);
-    yy = TOP + 72;
+    ctrSp("「" + now0 + "」とは", TOP + 20, "bold 24px " + GOT, LAV, 3);
+    yy = TOP + 62;
     packed.forEach(function(a){
-      a.forEach(function(ln){ ctr(ln, yy, "27px " + GOT, INK); yy += 44; });
-      yy += 10;
+      a.forEach(function(ln){ ctr(ln, yy, "24px " + GOT, INK); yy += 38; });
+      yy += 8;
     });
 
     /* お金の流れ（紺の額に二重罫） */
     var txt = shimeText(r, p);
-    c.font = "40px " + MIN;
-    var ls = wrapKu(c, txt, 720), lh = 60;
-    var FY = TOP + PH + 52, FH = 56 + ls.length * lh + 34;
+    c.font = "34px " + MIN;
+    var ls = wrapKu(c, txt, 680), lh = 50;
+    var FY = TOP + PH + 44, FH = 48 + ls.length * lh + 28;
     c.fillStyle = "#0e1b34"; rr(PX, FY, PW, FH, 18); c.fill();
     c.strokeStyle = GOLD; c.lineWidth = 3; rr(PX, FY, PW, FH, 18); c.stroke();
     c.strokeStyle = GOLD2; c.lineWidth = 1; rr(PX + 10, FY + 10, PW - 20, FH - 20, 12); c.stroke();
     var lab = "あなたのお金の流れ", lsp = 5;
-    c.font = "bold 21px " + GOT;
+    c.font = "bold 19px " + GOT;
     var lw = 0, k; for (k = 0; k < lab.length; k++) lw += c.measureText(lab[k]).width + lsp;
-    lw = lw - lsp + 56;
-    c.fillStyle = GOLD; rr(CX - lw / 2, FY - 21, lw, 42, 21); c.fill();
-    ctrSp(lab, FY - 9, "bold 21px " + GOT, "#162440", lsp);
-    yy = FY + 56;
-    ls.forEach(function(t){ ctr(t, yy, "40px " + MIN, CREAM); yy += lh; });
-
-    /* 発行日と署名 */
-    var SY = FY + FH + 44, dt = new Date();
-    c.font = "21px " + GOT; c.fillStyle = GOLD2;
-    c.fillText(dt.getFullYear() + "年" + (dt.getMonth() + 1) + "月" + dt.getDate() + "日 発行", 150, SY);
-    c.font = "32px " + MIN; c.fillStyle = GOLD;
-    var sg = "のりぴ";
-    c.fillText(sg, 930 - c.measureText(sg).width, SY - 8);
-    line(790, SY + 34, 930, SY + 34, GOLD2, 1);
+    lw = lw - lsp + 52;
+    c.fillStyle = GOLD; rr(CX - lw / 2, FY - 19, lw, 38, 19); c.fill();
+    ctrSp(lab, FY - 8, "bold 19px " + GOT, "#162440", lsp);
+    yy = FY + 48;
+    ls.forEach(function(t){ ctr(t, yy, "34px " + MIN, CREAM); yy += lh; });
 
     /* QR */
-    var QY = SY + 70;
-    c.drawImage(im[1], 210, QY, 142, 142);
-    c.strokeStyle = GOLD2; c.lineWidth = 2; rr(204, QY - 6, 154, 154, 8); c.stroke();
-    c.font = "bold 26px " + GOT; c.fillStyle = CREAM;
-    c.fillText("あなたも診断してみる", 392, QY + 18);
-    c.font = "18px " + GOT; c.fillStyle = GOLD2;
-    c.fillText("引き寄せ四柱推命 金脈編", 392, QY + 60);
-    line(392, QY + 96, 740, QY + 96, GOLD2, 1);
-    c.fillText("無料・生年月日だけで診断できます", 392, QY + 106);
+    var QY = FY + FH + 46;
+    c.drawImage(im[1], 212, QY, 132, 132);
+    c.strokeStyle = GOLD2; c.lineWidth = 2; rr(206, QY - 6, 144, 144, 8); c.stroke();
+    c.font = "bold 25px " + GOT; c.fillStyle = CREAM;
+    c.fillText("あなたも診断してみる", 382, QY + 14);
+    c.font = "17px " + GOT; c.fillStyle = GOLD2;
+    c.fillText("のりぴの 引き寄せ四柱推命 金脈編", 382, QY + 54);
+    line(382, QY + 88, 716, QY + 88, GOLD2, 1);
+    c.fillText("無料・生年月日だけで診断できます", 382, QY + 98);
 
     done(cv.toDataURL("image/png"));
   }).catch(fail);
