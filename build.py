@@ -45,6 +45,11 @@ header p{margin:0;font-size:13.5px;color:var(--sub)}
 header h1 .hsub{display:block;margin:7px 0 0;font-size:.5em;letter-spacing:.34em;font-weight:900}
 .card{background:var(--card);border:1px solid var(--line);border-radius:26px;padding:26px 21px;margin:0 0 20px;
   box-shadow:0 10px 30px rgba(199,120,152,.08)}
+/* 入れた生年月日の確認。結果の一番上に小さく出す */
+.born{margin:0 0 16px;text-align:center}
+.born span{display:inline-block;padding:8px 18px;border-radius:999px;background:#fff;
+  border:1px solid var(--line);font-size:13px;font-weight:900;letter-spacing:.04em;color:var(--sub)}
+.born b{font-size:14.5px;color:var(--ink)}
 label.fl{display:block;font-size:13px;font-weight:700;color:var(--pink-d);margin:0 0 7px;letter-spacing:.05em}
 input[type=text],select{width:100%;padding:15px 14px;font-size:16px;font-family:inherit;color:var(--ink);
   background:#fff;border:1px solid var(--line);border-radius:17px;appearance:none;-webkit-appearance:none}
@@ -653,7 +658,8 @@ function render(r){
   var t2 = gFirst ? D.types.rinki : D.types.gyaku;
   var n1 = gFirst ? p : q, n2 = gFirst ? q : p;
 
-  var h = '<div class="card">' +
+  var h = (BORN ? '<p class="born"><span><b>' + esc(BORN) + '</b> 生まれ</span></p>' : '') +
+    '<div class="card">' +
     '<h2><span>TYPE</span>あなたの引き寄せタイプ</h2>' +
     '<div class="ratio">' +
       '<span class="n '+(gFirst?"l":"r")+'">'+esc(t1.name)+' <i>'+n1+'</i>%</span>' +
@@ -720,6 +726,7 @@ function run(){
   var h = (hv === "23") ? 23 : null;
   err.hidden = true;
   var r = calcMoney(y, m, d, h), p = calcRatio(r);
+  BORN = y + "年" + m + "月" + d + "日";   // 画面に出す確認用。時間は出さない
   LAST = { r: r, p: p };
   document.getElementById("form").hidden = true;
   window.scrollTo(0, 0);
@@ -727,7 +734,7 @@ function run(){
   show(r, p);
 }
 /* 結果を描く。ログインで鍵が開いた時も、ここをもう一度通る */
-var LAST = null;
+var LAST = null, BORN = "";
 function show(r, p){
   var out = document.getElementById("result");
   out.innerHTML = render(r); out.hidden = false;
